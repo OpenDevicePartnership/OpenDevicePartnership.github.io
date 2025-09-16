@@ -3,17 +3,24 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Redirecting...</title>
-		<meta http-equiv="refresh" content="0;url=/index.html">
 		<script type="text/javascript">
-			// GitHub Pages SPA redirect: rewrite URL and reload index.html
+			// GitHub Pages SPA redirect: rewrite URL after loading index.html
 			(function() {
-				var l = window.location;
-				var pathname = l.pathname.replace(/^\//, "");
-				if (pathname !== "index.html" && pathname !== "" && !pathname.startsWith("public/")) {
-					var search = l.search || "";
-					var hash = l.hash || "";
-					var newUrl = "/index.html?redirect=" + encodeURIComponent(pathname + search + hash);
-					window.location.replace(newUrl);
+				var redirect = sessionStorage.getItem('redirect');
+				if (redirect) {
+					sessionStorage.removeItem('redirect');
+					window.location.replace(redirect);
+				} else {
+					var l = window.location;
+					var pathname = l.pathname;
+					// Don't redirect if already at index.html or root
+					if (!pathname.endsWith('/index.html') && pathname !== '/' && pathname !== '/index.html') {
+						var search = l.search || '';
+						var hash = l.hash || '';
+						var newUrl = '/index.html';
+						sessionStorage.setItem('redirect', pathname + search + hash);
+						window.location.replace(newUrl);
+					}
 				}
 			})();
 		</script>
