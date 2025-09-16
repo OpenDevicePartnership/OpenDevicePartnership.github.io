@@ -21,9 +21,7 @@ jobs:
 
     timeout-minutes: 10
 
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    environment: github-pages
 
     runs-on: ubuntu-latest
 
@@ -70,18 +68,10 @@ jobs:
 
       # Deploy with Github Static Pages
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
+      - name: Deploy to gh-pages branch 🚀
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          enablement: true
-          # token:
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload dist dir
-          path: './dist'
-
-      - name: Deploy to GitHub Pages 🚀
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
