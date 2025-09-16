@@ -9,11 +9,9 @@ fn main() {
                 let encoded = &location[idx + 3..];
                 if let Ok(path) = urlencoding::decode(encoded) {
                     let history = window.history().unwrap();
-                    history.replace_state_with_url(
-                        &wasm_bindgen::JsValue::NULL,
-                        "",
-                        Some(&path),
-                    ).ok();
+                    history
+                        .replace_state_with_url(&wasm_bindgen::JsValue::NULL, "", Some(&path))
+                        .ok();
                 }
             }
         }
