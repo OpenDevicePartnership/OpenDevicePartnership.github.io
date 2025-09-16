@@ -23,6 +23,13 @@ use crate::pages::unified_ec_services::WindowsEcServices;
 pub fn App() -> impl IntoView {
     provide_meta_context();
 
+    // Dynamically set router base for local dev vs GitHub Pages
+    let base = if cfg!(debug_assertions) {
+        "/"
+    } else {
+        "/OpenDevicePartnership.github.io/"
+    };
+
     view! {
         <Html attr:lang="en" attr:dir="ltr" attr:data-theme="light" />
         <Stylesheet id="leptos" href="/style/output.css" />
@@ -35,7 +42,7 @@ pub fn App() -> impl IntoView {
         <Meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <div class="min-h-screen w-full">
-            <Router base="/">
+            <Router base=base>
                 <Routes fallback=|| view! { NotFound }>
                     <Route path=path!("/home") view=Home />
                     <Route path=path!("/getting-started") view=GettingStarted />
