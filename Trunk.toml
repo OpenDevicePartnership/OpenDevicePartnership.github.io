@@ -9,6 +9,7 @@ release = false
 dist = "dist"
 # The public URL from which assets are to be served.
 public_url = "/OpenDevicePartnership.github.io/"
+no_sri = true
 # Whether to include hash values in the output file names.
 filehash = true
 # Whether to inject scripts (and module preloads) into the finalized output.
