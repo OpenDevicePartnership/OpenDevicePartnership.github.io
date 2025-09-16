@@ -11,6 +11,8 @@ leptos_router = "0.8.2"
 wasm-bindgen = "0.2.100"
 web-sys = { version = "0.3.77", features = ["Document", "Window", "console"] }
 
+urlencoding = "2"
+
 [dev-dependencies]
 wasm-bindgen = "0.2.100"
 wasm-bindgen-test = "0.3.50"
