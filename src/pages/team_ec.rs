@@ -117,7 +117,7 @@ pub fn TeamEC() -> impl IntoView {
                             </picture>
                         </a>
                     </div>
-                    
+
                     <div class="flex flex-row gap-[80px]">
                         {/* Left Column */}
                         <div class="flex flex-col items-start" style="width: 700px;">
