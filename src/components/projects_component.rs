@@ -123,7 +123,7 @@ pub fn ProjectsComponent() -> impl IntoView {
                         </span>
                         <div class="flex flex-col gap-[8px]">
                             <a
-                                href="https://opendevicepartnership.github.io/documentation/intro/concepts/patina.html"
+                                href="https://opendevicepartnership.github.io/documentation/tracks/patina/track_overview.html"
                                 class="link"
                                 style="text-decoration: none;"
                                 target="_blank"
@@ -179,7 +179,7 @@ pub fn ProjectsComponent() -> impl IntoView {
                         </span>
                         <div class="flex flex-col gap-[8px]">
                             <a
-                                href="https://opendevicepartnership.github.io/documentation/intro/concepts/Embedded_controller.html"
+                                href="https://opendevicepartnership.github.io/documentation/tracks/embedded_controller/track_overview.html"
                                 class="link"
                                 style="text-decoration: none;"
                                 target="_blank"
@@ -233,7 +233,7 @@ pub fn ProjectsComponent() -> impl IntoView {
                         </span>
                         <div class="flex flex-col gap-[8px]">
                             <a
-                                href="https://opendevicepartnership.github.io/documentation/intro/concepts/EC_Services.html"
+                                href="https://opendevicepartnership.github.io/documentation/guide/intro/concepts/EC_Services.html"
                                 class="link"
                                 style="text-decoration: none;"
                                 target="_blank"

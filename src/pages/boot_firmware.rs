@@ -11,22 +11,22 @@ use leptos::prelude::*;
 pub fn BootFirmware() -> impl IntoView {
     let links = vec![
         DocLink {
-            href: "https://opendevicepartnership.github.io/documentation/why/why.html",
+            href: "https://opendevicepartnership.github.io/documentation/guide/why/why.html",
             title: "Why ODP?",
             external: true,
         },
         DocLink {
-            href: "https://opendevicepartnership.github.io/documentation/intro/welcome.html",
+            href: "https://opendevicepartnership.github.io/documentation/guide/intro/getting_started.html",
             title: "Getting Started with ODP",
             external: true,
         },
         DocLink {
-            href: "https://opendevicepartnership.github.io/documentation/intro/tutorial/tutorial.html",
+            href: "https://opendevicepartnership.github.io/documentation/guide/intro/welcome.html",
             title: "Tutorials",
             external: true,
         },
         DocLink {
-            href: "https://opendevicepartnership.github.io/documentation/specs/specifications.html",
+            href: "https://opendevicepartnership.github.io/documentation/guide/specs/specifications.html",
             title: "Specifications",
             external: true,
         },

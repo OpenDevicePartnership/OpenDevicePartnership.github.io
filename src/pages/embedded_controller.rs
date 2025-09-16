@@ -11,22 +11,22 @@ use leptos::prelude::*;
 pub fn EmbeddedController() -> impl IntoView {
     let links = vec![
         DocLink {
-            href: "https://opendevicepartnership.github.io/documentation/why/why.html",
+            href: "https://opendevicepartnership.github.io/documentation/guide/why/why.html",
             title: "Why ODP?",
             external: true,
         },
         DocLink {
-            href: "https://opendevicepartnership.github.io/documentation/intro/welcome.html",
+            href: "https://opendevicepartnership.github.io/documentation/guide/intro/getting_started.html",
             title: "Getting Started with ODP",
             external: true,
         },
         DocLink {
-            href: "https://opendevicepartnership.github.io/documentation/intro/tutorial/tutorial.html",
+            href: "https://opendevicepartnership.github.io/documentation/guide/intro/welcome.html",
             title: "Tutorials",
             external: true,
         },
         DocLink {
-            href: "https://opendevicepartnership.github.io/documentation/specs/specifications.html",
+            href: "https://opendevicepartnership.github.io/documentation/guide/specs/specifications.html",
             title: "Specifications",
             external: true,
         },
@@ -74,7 +74,7 @@ It’s a modern foundation for building reliable, adaptable EC firmware — not 
 
             <div class="w-full min-h-screen" style="overflow-x: auto;">
                 <Header />
-                <ProjectIntroduction project_title=project_title project_summary=project_summary project_what=project_what project_why=project_why 
+                <ProjectIntroduction project_title=project_title project_summary=project_summary project_what=project_what project_why=project_why
                     big_image_url="/images/ECBackground.png"
                     small_image_url="/images/dark/ProjectIcon_EC_Patina_DarkMode.svg"/>
                 <RepositoryGraph nodes=nodes_data links=links_data/>

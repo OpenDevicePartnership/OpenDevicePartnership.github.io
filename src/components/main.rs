@@ -48,54 +48,54 @@ pub fn Main() -> impl IntoView {
                 </div>
             </div>
 
-            {/* Training Videos Section */}
-            // <div class="flex flex-col pt-10" style="padding-left: 117px;">
-            //     {/* Top row: icon/text + main iframe */}
-            //     <div class="flex flex-row items-start w-full">
-            //         <div class="flex flex-col items-start w-[423px] mr-[60px]">
-            //             <picture>
-            //                 <source srcset="/images/dark/video.svg" media="(prefers-color-scheme: dark)" />
-            //                 <img
-            //                     src="/images/light/video.svg"
-            //                     alt="Video Icon"
-            //                     style="
-            //                         width: 150px;
-            //                         height: 150px;
-            //                         padding: 0;
-            //                         object-fit: contain;
-            //                         display: block;
-            //                         margin-bottom: 16px;
-            //                     "
-            //                 />
-            //             </picture>
-            //             <span class="h2"
-            //                   style="
-            //                       display: block;
-            //                       text-align: left;
-            //                   ">
-            //                 "Welcome"
-            //             </span>
-            //             <div style="height: 10px;"></div>
-            //             <span class="p1"
-            //                   style="
-            //                       display: block;
-            //                       text-align: left;
-            //                   ">
-            //                 "Learn how ODP projects help build secure, modern devices"
-            //             </span>
-            //         </div>
-            //         <iframe
-            //             width="1200"
-            //             height="690"
-            //             style="border-radius: 10px; display: block;"
-            //             src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-            //             title="YouTube Video of the Open Device Partnership"
-            //             frameborder="0"
-            //             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            //             allowfullscreen>
-            //         </iframe>
-            //     </div>
-            // </div>
+            {/* Video Section */}
+            <div class="flex flex-col pt-10" style="padding-left: 117px;">
+                {/* Top row: icon/text + main iframe */}
+                <div class="flex flex-row items-start w-full">
+                    <div class="flex flex-col items-start w-[423px] mr-[60px]">
+                        <picture>
+                            <source srcset="/images/dark/video.svg" media="(prefers-color-scheme: dark)" />
+                            <img
+                                src="/images/light/video.svg"
+                                alt="Video Icon"
+                                style="
+                                    width: 150px;
+                                    height: 150px;
+                                    padding: 0;
+                                    object-fit: contain;
+                                    display: block;
+                                    margin-bottom: 16px;
+                                "
+                            />
+                        </picture>
+                        <span class="h2"
+                              style="
+                                  display: block;
+                                  text-align: left;
+                              ">
+                            "Welcome"
+                        </span>
+                        <div style="height: 10px;"></div>
+                        <span class="p1"
+                              style="
+                                  display: block;
+                                  text-align: left;
+                              ">
+                            "Learn how ODP projects help build secure, modern devices"
+                        </span>
+                    </div>
+                    <iframe
+                        width="1200"
+                        height="690"
+                        style="border-radius: 10px; display: block;"
+                        src="https://www.youtube.com/embed/FMlPxYSY1LM?rel=0"
+                        title="YouTube Video of the Open Device Partnership"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
         </main>
     }
 }
