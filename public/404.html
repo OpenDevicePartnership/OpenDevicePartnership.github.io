@@ -1,35 +1,26 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Redirecting...</title>
-		<script type="text/javascript">
-			// GitHub Pages SPA redirect: rewrite URL after loading index.html
-			(function() {
-				var redirect = sessionStorage.getItem('redirect');
-				if (redirect) {
-					sessionStorage.removeItem('redirect');
-					window.location.replace(redirect);
-				} else {
-					var l = window.location;
-					var pathname = l.pathname;
-					// Don't redirect if already at index.html or root
-					if (!pathname.endsWith('/index.html') && pathname !== '/' && pathname !== '/index.html') {
-						var search = l.search || '';
-						var hash = l.hash || '';
-						var newUrl = '/index.html';
-						sessionStorage.setItem('redirect', pathname + search + hash);
-						window.location.replace(newUrl);
-					}
-				}
-			})();
-		</script>
-		<style>
-			body { background: #fff; color: #222; font-family: system-ui, sans-serif; }
-		</style>
-	</head>
-	<body>
-		<h1>Redirecting...</h1>
-		<p>If you are not redirected, <a href="/index.html">click here</a>.</p>
-	</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/OpenDevicePartnership.github.io/tailwind-d3251e5794d0c78f.css"/>
+    
+<script type="module">
+import init, * as bindings from '/OpenDevicePartnership.github.io/odp-93af51283dc1c08a.js';
+const wasm = await init({ module_or_path: '/OpenDevicePartnership.github.io/odp-93af51283dc1c08a_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
+    
+    
+    <link rel="icon" href="images/odpicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="modulepreload" href="/OpenDevicePartnership.github.io/odp-93af51283dc1c08a.js" crossorigin="anonymous"><link rel="preload" href="/OpenDevicePartnership.github.io/odp-93af51283dc1c08a_bg.wasm" crossorigin="anonymous" as="fetch" type="application/wasm"></head>
+  <body></body>
 </html>
