@@ -101,7 +101,7 @@ pub fn ProjectsComponent() -> impl IntoView {
                                 text-align: left;
                             "
                         >
-                            {"Boot Firmware (Patina)"}
+                            {"Patina (Boot Firmware)"}
                         </span>
                         <span
                             class="p1"
@@ -110,7 +110,7 @@ pub fn ProjectsComponent() -> impl IntoView {
                                 text-align: left;
                             "
                         >
-                            {"A secure Rust-based UEFI implementation"}
+                            {"Rethink your boot firmware"}
                         </span>
                         <span
                             class="p2"
@@ -119,17 +119,17 @@ pub fn ProjectsComponent() -> impl IntoView {
                                 text-align: left;
                             "
                         >
-                            {"Patina provides a modern UEFI firmware written in Rust. Designed for safety and composability, it serves as a foundational layer for secure boot on client platforms."}
+                            {"Patina provides a UEFI compatible firmware interface written in the Rust language with a focus on memory safety and composition.  Compatible with current UEFI device drivers and loaders but with a focus on the future."}
                         </span>
                         <div class="flex flex-col gap-[8px]">
                             <a
-                                href="https://opendevicepartnership.github.io/documentation/tracks/patina/track_overview.html"
+                                href=""
                                 class="link"
                                 style="text-decoration: none;"
                                 target="_blank"
                             >
                                 <span style="text-decoration: none;">{"→ "}</span>
-                                <span style="text-decoration: underline;">{"Read the Boot Firmware Guide"}</span>
+                                <span style="text-decoration: underline;">{"Docs coming soon"}</span>
                             </a>
                             <span
                                 class="p2"
