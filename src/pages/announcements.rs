@@ -1,3 +1,5 @@
+use leptos::prelude::Effect;
+use leptos_router::hooks::{use_location, use_navigate};
 use leptos::prelude::*;
 use crate::components::header::Header;
 use crate::components::footer::Footer;
@@ -47,13 +49,42 @@ fn patina_press_release() -> impl IntoView {
 
 #[component]
 pub fn AnnouncementsPage() -> impl IntoView {
-    // List of announcement links and their content
+    let location = use_location();
+    let navigate = use_navigate();
+
+    // List of announcement links and their content (display_text, title, slug)
     let announcements = vec![
-        ("Jan-1-2025 Test", "Announcement 2", 1), // 1 = Test announcement
-        ("Oct-7-2025 Welcome Patina!", "Patina Project to Launch at UEFI 2025 Developer Conference & Plugfest", 0), // 0 = Patina press release
+        ("Oct-7-2025 Welcome Patina!", "Patina Project to Launch at UEFI 2025 Developer Conference & Plugfest", "welcome-patina-announcement"),
     ];
 
     let (selected, set_selected) = signal(0);
+
+    // Set selected from query param if present
+    {
+        let location = location.clone();
+        let set_selected = set_selected.clone();
+        let announcements_clone = announcements.clone();
+        Effect::new(move |_| {
+            let search = location.search.get();
+            
+            // Check for new slug-based format: ?id=slug
+            if search.contains("id=") {
+                // Try to extract the id value more flexibly
+                if let Some(id_start) = search.find("id=") {
+                    let slug = &search[id_start + 3..];
+                    // Remove any trailing parameters
+                    let slug = if let Some(amp_pos) = slug.find('&') {
+                        &slug[..amp_pos]
+                    } else {
+                        slug
+                    };
+                    if let Some(idx) = announcements_clone.iter().position(|(_, _, s)| *s == slug) {
+                        set_selected.set(idx);
+                    }
+                }
+            }
+        });
+    }
 
     view! {
         <div class="flex flex-col w-full min-h-screen background_quaternary">
@@ -62,12 +93,17 @@ pub fn AnnouncementsPage() -> impl IntoView {
             <div class="flex flex-row w-full flex-1 relative">
                 <div class="w-[450px] h-[700px] overflow-y-auto background_tertiary z-10 p-6">
                     <ul class="space-y-4">
-                        {announcements.iter().enumerate().map(|(i, (link, _, _))| {
+                        {announcements.iter().enumerate().map(|(i, (link, _, slug))| {
+                            let navigate = navigate.clone();
+                            let slug = *slug;
                             view! {
                                 <li>
                                     <button
                                         class="link w-full text-left p-3"
-                                        on:click=move |_| set_selected.set(i)
+                                        on:click=move |_| {
+                                            set_selected.set(i);
+                                            navigate(&format!("/announcements?id={}", slug), Default::default());
+                                        }
                                     >
                                         {*link}
                                     </button>
@@ -78,10 +114,9 @@ pub fn AnnouncementsPage() -> impl IntoView {
                 </div>
                 <div class="flex-1 h-[700px] background_primary rounded-tl-[50px] -ml-16 z-20 overflow-y-auto p-10">
                     {move || {
-                        let (title, content): (String, AnyView) = if let Some((_, title, content_id)) = announcements.get(selected.get()) {
-                            let content = match *content_id {
-                                0 => patina_press_release().into_any(),
-                                1 => view! { <p>"Empty Text!"</p> }.into_any(),
+                        let (title, content): (String, AnyView) = if let Some((_, title, slug)) = announcements.get(selected.get()) {
+                            let content = match *slug {
+                                "welcome-patina-announcement" => patina_press_release().into_any(),
                                 _ => view! { <p>"Content not found"</p> }.into_any(),
                             };
                             (title.to_string(), content)
