@@ -5,6 +5,7 @@ use std::sync::Arc;
 
 #[component]
 pub fn AnnouncementsPage() -> impl IntoView {
+    let location = use_location();
     // List of announcement links and their content
     let announcements = Arc::new(vec![
         ("Announcement 1", "Welcome Patina!"),
@@ -12,6 +13,20 @@ pub fn AnnouncementsPage() -> impl IntoView {
     ]);
 
     let (selected, set_selected) = signal(0);
+
+    // Set selected from query param if present
+    {
+        let location = location.clone();
+        let set_selected = set_selected.clone();
+    Effect::new(move |_| {
+            let search = location.search.get();
+            if let Some(idx) = search.strip_prefix("?selected=") {
+                if let Ok(idx) = idx.parse::<usize>() {
+                    set_selected.set(idx);
+                }
+            }
+        });
+    }
 
     view! {
         <div class="flex flex-col w-full min-h-screen background_quaternary">
