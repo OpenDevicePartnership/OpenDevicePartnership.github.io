@@ -24,7 +24,17 @@ fn patina_press_release() -> impl IntoView {
             <p class="mb-4">
                 "In addition to Patina, ODP is currently focused on three other major projects:"
             </p>
-
+            <ul class="list-disc pl-12 mb-4">
+                <li class="mb-2">
+                    <strong>"Secure EC firmware"</strong>", providing a modern, security-focused embedded controller implementation designed to eliminate classes of bugs prevalent in legacy EC codebases."
+                </li>
+                <li class="mb-2">
+                    <strong>"Unified OS-EC service interface"</strong>", ensuring that operating systems can interact with embedded controllers in a consistent, well-defined way across devices."
+                </li>
+                <li class="mb-2">
+                    <strong>"MPTF"</strong>", extending recent advancements in the Windows power-thermal framework to meet partner needs."
+                </li>
+            </ul>
             <p class="mb-4">
                 "Together, these efforts give hardware makers the ability to standardize firmware and device software across their entire portfolios—improving reliability, accelerating time-to-market, and reducing redundant engineering work."
             </p>
