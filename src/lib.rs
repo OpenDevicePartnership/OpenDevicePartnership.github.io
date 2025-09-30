@@ -17,6 +17,7 @@ use crate::pages::team_ec::TeamEC;
 use crate::pages::team_ec_services::TeamECServices;
 use crate::pages::team_patina::TeamPatina;
 use crate::pages::unified_ec_services::WindowsEcServices;
+use crate::pages::announcements::AnnouncementsPage;
 
 /// An app router which renders the homepage
 #[component]
@@ -48,6 +49,7 @@ pub fn App() -> impl IntoView {
                     <Route path=path!("/projects") view=Projects />
                     <Route path=path!("/") view=Home />
                     <Route path=path!("/team-ec-services") view=TeamECServices />
+                    <Route path=path!("/announcements") view=AnnouncementsPage />
                 </Routes>
             </Router>
         </div>

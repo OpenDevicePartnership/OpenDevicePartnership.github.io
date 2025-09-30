@@ -1,3 +1,4 @@
+pub mod announce_banner;
 pub mod community_teams;
 pub mod documentation_training;
 pub mod footer;
