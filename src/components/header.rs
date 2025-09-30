@@ -1,12 +1,13 @@
+use crate::components::announce_banner::AnnounceBanner;
 use leptos::prelude::RwSignal;
 use leptos::prelude::*;
 use leptos_router::components::A;
 
 #[component]
-pub fn Header() -> impl IntoView {
+pub fn Header(#[prop(optional, default = "header_background")] background_class: &'static str) -> impl IntoView {
     let menu_open = RwSignal::new(false);
     view! {
-    <header class="w-full h-[80px] md:h-[160px] px-2 md:px-[120px] background_primary flex items-center justify-between z-50 m-0 p-0 relative">
+        <header class={format!("w-full h-[80px] md:h-[160px] px-2 md:px-[120px] {} flex items-center justify-between z-50 m-0 p-0 relative", background_class)}>
             <div class="flex items-center space-x-6">
                 <picture>
                     <source srcset="/images/dark/odplogo.svg" media="(prefers-color-scheme: dark)" />
@@ -29,10 +30,8 @@ pub fn Header() -> impl IntoView {
                 <span class="block w-6 h-0.5 bg-black dark:bg-white"></span>
             </button>
 
-            {/* Navigation */}
-            <nav
-                class="hidden md:flex [column-gap:25px]"
-            >
+            {/* Desktop Navigation */}
+            <nav class="hidden md:flex [column-gap:25px]">
                 <NavButton href="/getting-started" label="Getting Started"/>
                 <NavButton href="/projects" label="Projects"/>
                 <ExternalNavButton href="https://opendevicepartnership.github.io/documentation/" label="Library"/>
@@ -52,6 +51,7 @@ pub fn Header() -> impl IntoView {
                 <NavButton href="/home" label="Home" mobile=true/>
             </nav>
         </header>
+        <AnnounceBanner />
     }
 }
 

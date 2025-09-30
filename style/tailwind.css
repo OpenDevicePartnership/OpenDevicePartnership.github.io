@@ -20,8 +20,12 @@
 }
 
 @layer utilities {
+  .header_background {
+    @apply bg-[#FFFFFF] dark:bg-[#171717];
+  }
+
   .background_primary {
-    @apply bg-white dark:bg-black;
+    @apply bg-[#FFFFFF] dark:bg-[#171717];
   }
    
   .background_secondary {
@@ -30,6 +34,14 @@
 
   .background_tertiary {
     @apply bg-[#E2E2E2] dark:bg-[#595959];
+  }
+
+  .background_quaternary {
+    @apply bg-[#CACACA] dark:bg-[#797979];
+  }
+
+  .background_announcement {
+    @apply bg-[#FEEED6] dark:bg-[#FEEED6];
   }
   
   .h1 {
