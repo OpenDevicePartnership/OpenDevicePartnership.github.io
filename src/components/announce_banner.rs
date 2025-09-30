@@ -8,7 +8,7 @@ pub fn AnnounceBanner() -> impl IntoView {
             <span class="p3">
                 <span class="font-bold">{"UPDATE: "}</span>
                 <span>{"Open Device Partnership Expands Open-Source Efforts; "}</span>
-                <a href="/announcements" class="underline hover:text-blue-600 transition-colors duration-150">
+                <a href="/announcements?id=welcome-patina-announcement" class="underline hover:text-blue-600 transition-colors duration-150">
                     {"Patina Project to Launch at UEFI 2025 Developer Conference & Plugfest - read more!"}
                 </a>
             </span>
