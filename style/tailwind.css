@@ -304,6 +304,15 @@
     @apply bg-black dark:bg-white border-white dark:border-black;
   }
 
+  /* Header buttons on quaternary background (announcements page) */
+  .background_quaternary .odp-header-btn {
+    @apply bg-[#CACACA] dark:bg-[#797979] border-black dark:border-white;
+  }
+
+  .background_quaternary .odp-header-btn-active {
+    @apply bg-black dark:bg-white border-white dark:border-black;
+  }
+
   .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
