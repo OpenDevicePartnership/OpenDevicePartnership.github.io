@@ -1,20 +1,23 @@
-use leptos::prelude::Effect;
-use leptos_router::hooks::{use_location, use_navigate};
-use leptos::prelude::*;
-use crate::components::header::Header;
 use crate::components::footer::Footer;
+use crate::components::header::Header;
+use leptos::prelude::Effect;
+use leptos::prelude::*;
+use leptos_router::hooks::{use_location, use_navigate};
 
 // Welcome Patina Press Release
 fn patina_press_release() -> impl IntoView {
     view! {
         <div>
             <p class="mb-4">
-                <strong>"October 7, 2025 – Sunnyvale, CA"</strong> " – The " <strong>"Open Device Partnership (ODP)"</strong> " today announced that " <strong>"Patina"</strong>", a new open-source firmware project inspired by and compatible with UEFI, will be made public at the upcoming " 
+                <strong>"October 7, 2025 – Redmond, WA"</strong> " – The " <strong>"Open Device Partnership (ODP)"</strong> " is announcing " <strong>"Patina"</strong>", a new open-source firmware project is public, and details will be shared at the upcoming "
                 <a href="https://uefi.org/events/uefi-2025-developers-conference-and-plugfest" class="underline hover:text-blue-600 transition-colors duration-150">
                     "UEFI 2025 Developer Conference & Plugfest"
                 </a>
-                ", October 7–10 in Sunnyvale, California. Patina joins a growing portfolio of ODP projects aimed at building a secure, modern foundation for device enablement. To learn more about Patina, please visit the project page and documentation here: " 
-                <span class="bg-yellow-200">"TBD"</span>"."
+                ", October 7–10 in Sunnyvale, California. Patina is a Rust-based, UEFI-compatible firmware designed for memory safety and to address long standing challenges in the PC firmware ecosystem. It reimagines system firmware development to meet the evolving needs of modern hardware, software development lifecycles, supply chains, and industry collaboration. Patina joins a growing portfolio of ODP projects aimed at building a secure, modern foundation for device enablement. To learn more about Patina, please visit the project page and documentation here: "
+                <a href="https://opendevicepartnership.github.io/patina/patina.html" class="underline hover:text-blue-600 transition-colors duration-150">
+                    "Patina Documentation"
+                </a>
+                "."
             </p>
 
             <p class="mb-4">
@@ -48,7 +51,7 @@ fn patina_press_release() -> impl IntoView {
             </p>
 
             <p class="mb-4">
-                "👉 Learn more and get involved at " 
+                "👉 Learn more and get involved at "
                 <a href="https://opendevicepartnership.org/" class="underline hover:text-blue-600 transition-colors duration-150">
                     "opendevicepartnership.org"
                 </a>"."
@@ -63,9 +66,11 @@ pub fn AnnouncementsPage() -> impl IntoView {
     let navigate = use_navigate();
 
     // List of announcement links and their content (display_text, title, slug)
-    let announcements = vec![
-        ("Oct-7-2025 Welcome Patina!", "Patina Project to Launch at UEFI 2025 Developer Conference & Plugfest", "welcome-patina-announcement"),
-    ];
+    let announcements = vec![(
+        "Oct-7-2025 Welcome Patina!",
+        "Patina Project to Launch at UEFI 2025 Developer Conference & Plugfest",
+        "welcome-patina-announcement",
+    )];
 
     let (selected, set_selected) = signal(0);
 
@@ -76,7 +81,7 @@ pub fn AnnouncementsPage() -> impl IntoView {
         let announcements_clone = announcements.clone();
         Effect::new(move |_| {
             let search = location.search.get();
-            
+
             // Check for new slug-based format: ?id=slug
             if search.contains("id=") {
                 // Try to extract the id value more flexibly

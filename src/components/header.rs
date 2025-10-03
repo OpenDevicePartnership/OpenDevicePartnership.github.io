@@ -1,11 +1,9 @@
+use crate::components::announce_banner::AnnounceBanner;
 use leptos::prelude::*;
 use leptos_router::components::A;
-use crate::components::announce_banner::AnnounceBanner;
 
 #[component]
-pub fn Header(
-    #[prop(optional, default = "header_background")] background_class: &'static str
-) -> impl IntoView {
+pub fn Header(#[prop(optional, default = "header_background")] background_class: &'static str) -> impl IntoView {
     view! {
         <>
             <header class={format!("w-full h-[160px] px-[120px] {} flex items-center justify-between z-50 m-0 p-0", background_class)}>
