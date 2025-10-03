@@ -35,10 +35,21 @@
   .h1 {
     @apply text-black dark:text-white;
     font-family: Geist, sans-serif;
-    font-size: 120px;
+    font-size: 110px;
     font-style: normal;
     font-weight: 400;
     line-height: 95%;
+    letter-spacing: -2.8px;
+    margin-bottom: 12px;
+  }
+
+  .h1_mobile {
+    @apply text-black dark:text-white;
+    font-family: Geist, sans-serif;
+    font-size: 80px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%;
     letter-spacing: -2.8px;
     margin-bottom: 12px;
   }
@@ -47,6 +58,17 @@
     @apply text-black dark:text-white;
     font-family: Geist, sans-serif;
     font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; /* 66px */
+    letter-spacing: -1.2px;
+    margin-bottom: 12px;
+  }
+  
+  .h2_mobile {
+    @apply text-black dark:text-white;
+    font-family: Geist, sans-serif;
+    font-size: 50px;
     font-style: normal;
     font-weight: 500;
     line-height: 110%; /* 66px */
@@ -65,6 +87,17 @@
     margin-bottom: 12px;
   }
 
+  .h3_mobile {
+    @apply text-black dark:text-white;
+    font-family: Geist, sans-serif;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 42px */
+    letter-spacing: -0.7px;
+    margin-bottom: 12px;
+  }
+
   .p {
     @apply text-black dark:text-white;
     font-family: Geist, sans-serif;
@@ -72,6 +105,15 @@
     font-style: normal;
     font-weight: 400;
     line-height: 130%; /* 26px */
+  }
+
+  .p_mobile {
+    @apply text-black dark:text-white;
+    font-family: Geist, sans-serif;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%; /* 26px */
   }
 
   .p1 {
@@ -85,10 +127,32 @@
     margin-bottom: 12px;
   }
 
+  .p1_mobile {
+    @apply text-black dark:text-white;
+    font-family: Geist, sans-serif;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%; /* 49px */
+    letter-spacing: -0.7px;
+    margin-bottom: 12px;
+  }
+
   .p2 {
     @apply text-black dark:text-white;
     font-family: Geist, sans-serif;
     font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%;
+    letter-spacing: -0.25px;
+    margin-bottom: 12px;
+  }
+
+  .p2_mobile {
+    @apply text-black dark:text-white;
+    font-family: Geist, sans-serif;
+    font-size: 38px;
     font-style: normal;
     font-weight: 500;
     line-height: 130%;
