@@ -1,7 +1,6 @@
-
+use leptos::prelude::RwSignal;
 use leptos::prelude::*;
 use leptos_router::components::A;
-use leptos::prelude::RwSignal;
 
 #[component]
 pub fn Header() -> impl IntoView {
