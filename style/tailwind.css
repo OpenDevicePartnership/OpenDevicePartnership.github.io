@@ -130,7 +130,7 @@
   .p1_mobile {
     @apply text-black dark:text-white;
     font-family: Geist, sans-serif;
-    font-size: 50px;
+    font-size: 30px;
     font-style: normal;
     font-weight: 500;
     line-height: 130%; /* 49px */
@@ -152,7 +152,7 @@
   .p2_mobile {
     @apply text-black dark:text-white;
     font-family: Geist, sans-serif;
-    font-size: 38px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: 130%;
@@ -187,6 +187,22 @@
     @apply text-black dark:text-white;
     font-family: Geist, sans-serif;
     font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 130%;
+    letter-spacing: -0.25px;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: auto;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+  }
+
+  .link_mobile {
+    @apply text-black dark:text-white;
+    font-family: Geist, sans-serif;
+    font-size: 20px;
     font-style: normal;
     font-weight: 500;
     line-height: 130%;
