@@ -297,7 +297,14 @@
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     grid-gap: 150px;
     justify-items: center;
-    padding: 0px 240px;
+    padding: 0px 8px;
+  }
+
+  @media (min-width: 768px) {
+    .grid-container {
+      padding-left: 240px;
+      padding-right: 240px;
+    }
   }
 
   .member-image {
