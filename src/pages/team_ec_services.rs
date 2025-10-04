@@ -50,10 +50,11 @@ pub fn TeamECServices() -> impl IntoView {
             <div class="w-full min-h-screen overflow-x-hidden">
                 <Header />
                 <div
-                    class="background_primary"
-                    style="padding: 120px; position: relative;"
+                    class="background_primary px-2 md:px-[120px] py-4 md:py-[120px]"
+                    style="position: relative;"
                 >
-                    <div style="position: absolute; left: 0; top: 0;">
+                    {/* Back Button: above content on mobile, absolutely positioned on desktop */}
+                    <div class="block md:hidden mb-4">
                         <a
                             href="javascript:history.back()"
                             class="block"
@@ -69,12 +70,27 @@ pub fn TeamECServices() -> impl IntoView {
                             </picture>
                         </a>
                     </div>
-
-                    <div class="flex flex-row gap-[80px]">
+                    <div class="hidden md:block" style="position: absolute; left: 0; top: 0;">
+                        <a
+                            href="javascript:history.back()"
+                            class="block"
+                            style="margin: 0; padding: 0;"
+                        >
+                            <picture>
+                                <source srcset="/images/dark/backbutton.svg" media="(prefers-color-scheme: dark)" />
+                                <img
+                                    src="/images/light/backbutton.svg"
+                                    alt="Back"
+                                    style="margin: 0; padding: 0; display: block;"
+                                />
+                            </picture>
+                        </a>
+                    </div>
+                    <div class="flex flex-col md:flex-row gap-[80px] items-start">
                         {/* Left Column */}
-                        <div class="flex flex-col items-start" style="width: 700px;">
+                        <div class="flex flex-col items-start w-full md:w-[700px]">
                             <span
-                                class="h1"
+                                class="h1_mobile md:h1"
                                 style="
                                     display: block;
                                     text-align: left;
@@ -84,7 +100,7 @@ pub fn TeamECServices() -> impl IntoView {
                             </span>
                         </div>
                         {/* Right Column */}
-                        <div class="flex flex-col items-start" style="width: 600px;">
+                        <div class="flex flex-col items-start w-full md:w-[600px]">
                             <span
                                 class="mono"
                                 style="
@@ -95,7 +111,7 @@ pub fn TeamECServices() -> impl IntoView {
                                 {"Unified EC services team"}
                             </span>
                             <span
-                                class="p1"
+                                class="p1_mobile md:p1"
                                 style="
                                     display: block;
                                     text-align: left;

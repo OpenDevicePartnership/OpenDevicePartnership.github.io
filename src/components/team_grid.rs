@@ -15,14 +15,14 @@ pub struct TeamMember {
 pub fn TeamGrid(#[prop(into)] members: Vec<TeamMember>) -> impl IntoView {
     view! {
         <div class="background_primary">
-            <div class="grid-container" style="padding-bottom: 120px;">
+            <div class="grid-container px-2 md:px-[120px]" style="padding-bottom: 120px;">
                 {members.into_iter().map(|member| {
                     view! {
                         <div>
                             <img class="member-image" src=member.image_url alt="Profile Picture" />
-                            <div class="h3">{format!("{} {}", member.first_name, member.last_name)}</div>
-                            <div class="p2">{member.role}</div>
-                            <div class="p2">
+                            <div class="h3_mobile md:h3">{format!("{} {}", member.first_name, member.last_name)}</div>
+                            <div class="p2_mobile md:p2">{member.role}</div>
+                            <div class="p2_mobile md:p2">
                                 {"GitHub: "}
                                 <a class="link" href=member.github_url target="_blank">{member.github_username}</a>
                             </div>
