@@ -4,25 +4,19 @@ use leptos::prelude::*;
 pub fn CommunityTeams() -> impl IntoView {
     view! {
         <section
-            class="background_primary"
-            style="
-                padding: 120px;
-            "
+            class="background_primary px-4 py-6 md:[120px]"
         >
             {/* Row 2: Two Columns */}
-            <div class="flex flex-row gap-[60px]" style="margin-bottom: 80px;">
-                <div style="width: 950px;">
-                    <span class="h1" style="display: block; text-align: left;">
+            <div class="flex flex-col md:flex-row gap-[60px]" style="margin-bottom: 80px;">
+                <div class="w-full md:w-[950px]">
+                    <span class="h1_mobile md:h1 break-words w-full" style="display: block; text-align: left;">
                         {"How ODP is built by its community"}
                     </span>
                 </div>
-                <div class="flex flex-col justify-start" style="flex: 1; min-width: 600px; max-width: 900px;">
+                <div class="flex flex-col justify-start w-full md:max-w-[900px]" style="flex: 1;">
                     <span
-                        class="p2"
-                        style="
-                            display: block;
-                            text-align: left;
-                        "
+                        class="p2 break-words w-full"
+                        style="display: block; text-align: left;"
                     >
 
                         {"The Open Device Partnership (ODP) is a collaborative open-source initiative designed to promote cooperative innovation in firmware development through contribution and transparency."}
@@ -60,35 +54,25 @@ pub fn CommunityTeams() -> impl IntoView {
                     />
                 </picture>
                 <span
-                    class="h2"
-                    style="
-                        display: flex;
-                        justify-content: left;
-                        align-items: left;
-                    "
+                    class="h2_mobile md:h2 break-words w-full"
+                    style="display: flex; justify-content: left; align-items: left;"
                 >
                     {"Teams"}
                 </span>
             </div>
 
             {/* Row 4: Teams */}
-            <div class="flex flex-row items-stretch" style="gap: 123px;">
+            <div class="flex flex-col md:flex-row items-stretch" style="gap: 123px;">
                 <div class="flex flex-col items-start h-full" style="width: 320px; min-height: 350px; justify-content: flex-start;">
                     <span
-                        class="h3"
-                        style="
-                            display: block;
-                            text-align: left;
-                        "
+                        class="h3_mobile md:h3 break-words w-full"
+                        style="display: block; text-align: left;"
                     >
                         {"Boot Firmware (Patina)"}
                     </span>
                     <span
-                        class="p2"
-                        style="
-                            display: block;
-                            text-align: left;
-                        "
+                        class="p2 break-words w-full"
+                        style="display: block; text-align: left;"
                     >
                         {"Developing and managing development of a new modern UEFI"}
                     </span>
@@ -106,20 +90,14 @@ pub fn CommunityTeams() -> impl IntoView {
                 </div>
                 <div class="flex flex-col items-start h-full" style="width: 320px; min-height: 350px; justify-content: flex-start;">
                     <span
-                        class="h3"
-                        style="
-                            display: block;
-                            text-align: left;
-                        "
+                        class="h3_mobile md:h3 break-words w-full"
+                        style="display: block; text-align: left;"
                     >
                         {"Secure Embedded Controller"}
                     </span>
                     <span
-                        class="p2"
-                        style="
-                            display: block;
-                            text-align: left;
-                        "
+                        class="p2 break-words w-full"
+                        style="display: block; text-align: left;"
                     >
                         {"Developing and managing secure EC internals"}
                     </span>
@@ -137,20 +115,14 @@ pub fn CommunityTeams() -> impl IntoView {
                 </div>
                 <div class="flex flex-col items-start h-full" style="width: 320px; min-height: 350px; justify-content: flex-start;">
                     <span
-                        class="h3"
-                        style="
-                            display: block;
-                            text-align: left;
-                        "
+                        class="h3_mobile md:h3 break-words w-full"
+                        style="display: block; text-align: left;"
                     >
                         {"Unified EC Services"}
                     </span>
                     <span
-                        class="p2"
-                        style="
-                            display: block;
-                            text-align: left;
-                        "
+                        class="p2 break-words w-full"
+                        style="display: block; text-align: left;"
                     >
                         {"Designing and managing implementation of a unified EC Services interface"}
                     </span>
