@@ -104,17 +104,17 @@ pub fn AnnouncementsPage() -> impl IntoView {
     view! {
         <div class="flex flex-col w-full min-h-screen background_quaternary">
             <Header background_class="background_quaternary" />
-            <h1 class="h1 px-10 pt-20 pb-20">Announcements</h1>
-            <div class="flex flex-row w-full flex-1 relative">
-                <div class="w-[450px] h-[700px] overflow-y-auto background_tertiary z-10 p-6">
-                    <ul class="space-y-4">
+            <div class="h1_mobile md:h1 px-4 md:px-10 pt-10 md:pt-20 pb-8 md:pb-20">Announcements</div>
+            <div class="flex flex-col md:flex-row w-full flex-1 relative">
+                <div class="w-full md:w-[450px] h-[300px] md:h-[700px] overflow-y-auto background_tertiary z-10 p-2 md:p-6 mb-4 md:mb-0">
+                    <ul class="space-y-2 md:space-y-4">
                         {announcements.iter().enumerate().map(|(i, (link, _, slug))| {
                             let navigate = navigate.clone();
                             let slug = *slug;
                             view! {
                                 <li>
                                     <button
-                                        class="link w-full text-left p-3"
+                                        class="link_mobile md:link w-full text-left p-2 md:p-3"
                                         on:click=move |_| {
                                             set_selected.set(i);
                                             navigate(&format!("/announcements?id={}", slug), Default::default());
@@ -127,7 +127,7 @@ pub fn AnnouncementsPage() -> impl IntoView {
                         }).collect::<Vec<_>>()}
                     </ul>
                 </div>
-                <div class="flex-1 h-[700px] background_primary rounded-tl-[50px] -ml-16 z-20 overflow-y-auto p-10">
+                <div class="flex-1 h-[300px] md:h-[700px] background_primary rounded-tl-[30px] md:rounded-tl-[50px] -ml-0 md:-ml-16 z-20 overflow-y-auto p-4 md:p-10">
                     {move || {
                         let (title, content): (String, AnyView) = if let Some((_, title, slug)) = announcements.get(selected.get()) {
                             let content = match *slug {
@@ -139,9 +139,9 @@ pub fn AnnouncementsPage() -> impl IntoView {
                             ("No announcement selected".to_string(), view! { <p>{""}</p> }.into_any())
                         };
                         view! {
-                            <div class="p">
-                                <h1 class="h2 pb-6">{title}</h1>
-                                <div class="leading-relaxed">
+                            <div class="p_mobile md:p">
+                                <div class="h2_mobile md:h2 pb-4 md:pb-6">{title}</div>
+                                <div class="p2_mobile md:p2">
                                     {content}
                                 </div>
                             </div>
