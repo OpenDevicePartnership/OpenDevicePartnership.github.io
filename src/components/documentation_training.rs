@@ -12,7 +12,7 @@ pub struct DocLink {
 pub fn DocumentationTraining(#[prop(default = vec![])] links: Vec<DocLink>) -> impl IntoView {
     view! {
         <section
-            class="flex flex-col md:flex-row items-start background_primary w-full overflow-x-hidden px-8 py-8 md:py-[60px] md:px-[120px]"
+            class="flex flex-col md:flex-row items-start background_primary w-full overflow-x-hidden px-6 py-8 md:py-[60px] md:px-[120px]"
         >
             {/* Left: Image and text box */}
             <div class="flex flex-col items-start w-full" style="align-items: flex-start;">
