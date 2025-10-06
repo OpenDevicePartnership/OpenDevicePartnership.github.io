@@ -14,7 +14,7 @@ fn patina_press_release() -> impl IntoView {
                     "UEFI 2025 Developer Conference & Plugfest"
                 </a>
                 ", October 7–10 in Sunnyvale, California. Patina is a Rust-based, UEFI-compatible firmware designed for memory safety and to address long standing challenges in the PC firmware ecosystem. It reimagines system firmware development to meet the evolving needs of modern hardware, software development lifecycles, supply chains, and industry collaboration. Patina joins a growing portfolio of ODP projects aimed at building a secure, modern foundation for device enablement. To learn more about Patina, please visit the project page and documentation here: "
-                <a href="https://opendevicepartnership.github.io/patina/patina.html" class="underline hover:text-blue-600 transition-colors duration-150">
+                <a href="https://opendevicepartnership.github.io/patina" class="underline hover:text-blue-600 transition-colors duration-150">
                     "Patina Documentation"
                 </a>
                 "."
