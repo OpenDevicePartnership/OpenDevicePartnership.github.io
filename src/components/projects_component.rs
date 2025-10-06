@@ -117,7 +117,7 @@ pub fn ProjectsComponent() -> impl IntoView {
                         </span>
                         <div class="flex flex-col gap-[8px]">
                             <a
-                                href="https://opendevicepartnership.github.io/patina/patina.html"
+                                href="https://opendevicepartnership.github.io/patina"
                                 class="link"
                                 style="text-decoration: none;"
                             >
