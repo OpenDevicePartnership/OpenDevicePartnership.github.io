@@ -117,24 +117,21 @@ pub fn ProjectsComponent() -> impl IntoView {
                         </span>
                         <div class="flex flex-col gap-[8px]">
                             <a
-                                href=""
+                                href="https://opendevicepartnership.github.io/patina"
                                 class="link"
                                 style="text-decoration: none;"
-                                target="_blank"
                             >
                                 <span style="text-decoration: none;">{"→ "}</span>
-                                <span style="text-decoration: underline;">{"Docs coming soon"}</span>
+                                <span style="text-decoration: underline;">{"Read the Patina Documentation"}</span>
                             </a>
-                            <span
-                                class="p2_mobile md:p2"
-                                style="
-                                    display: block;
-                                    text-align: left;
-                                    color: #888;
-                                "
+                            <a
+                                href="https://github.com/opendevicepartnership/patina"
+                                class="link"
+                                style="text-decoration: none;"
                             >
-                                {"Patina GitHub repo coming soon!"}
-                            </span>
+                                <span style="text-decoration: none;">{"→ "}</span>
+                                <span style="text-decoration: underline;">{"View Patina Source Code on GitHub"}</span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -176,10 +173,9 @@ pub fn ProjectsComponent() -> impl IntoView {
                                 href="https://opendevicepartnership.github.io/documentation/tracks/embedded_controller/track_overview.html"
                                 class="link"
                                 style="text-decoration: none;"
-                                target="_blank"
                             >
                                 <span style="text-decoration: none;">{"→ "}</span>
-                                <span style="text-decoration: underline;">{"Read the Secure EC Guide"}</span>
+                                <span style="text-decoration: underline;">{"Read the Secure EC Documentation"}</span>
                             </a>
                             <a
                                 href="https://github.com/OpenDevicePartnership/embedded-services"
@@ -187,7 +183,7 @@ pub fn ProjectsComponent() -> impl IntoView {
                                 style="text-decoration: none;"
                             >
                                 <span style="text-decoration: none;">{"→ "}</span>
-                                <span style="text-decoration: underline;">{"View Secure EC (core) on GitHub"}</span>
+                                <span style="text-decoration: underline;">{"View Secure EC Source Code on GitHub"}</span>
                             </a>
                         </div>
                     </div>
@@ -230,10 +226,9 @@ pub fn ProjectsComponent() -> impl IntoView {
                                 href="https://opendevicepartnership.github.io/documentation/guide/intro/concepts/EC_Services.html"
                                 class="link"
                                 style="text-decoration: none;"
-                                target="_blank"
                             >
                                 <span style="text-decoration: none;">{"→ "}</span>
-                                <span style="text-decoration: underline;">{"Read the EC Services Guide"}</span>
+                                <span style="text-decoration: underline;">{"Read the EC Services Documentation"}</span>
                             </a>
                             <a
                                 href="https://github.com/OpenDevicePartnership/haf-ec-service"
@@ -241,7 +236,7 @@ pub fn ProjectsComponent() -> impl IntoView {
                                 style="text-decoration: none;"
                             >
                                 <span style="text-decoration: none;">{"→ "}</span>
-                                <span style="text-decoration: underline;">{"View EC Services on GitHub"}</span>
+                                <span style="text-decoration: underline;">{"View EC Services Source Code on GitHub"}</span>
                             </a>
                         </div>
                     </div>

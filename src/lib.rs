@@ -7,6 +7,7 @@ mod components;
 mod pages;
 
 // Top-Level pages
+use crate::pages::announcements::AnnouncementsPage;
 use crate::pages::boot_firmware::BootFirmware;
 use crate::pages::community::Community;
 use crate::pages::embedded_controller::EmbeddedController;
@@ -48,6 +49,7 @@ pub fn App() -> impl IntoView {
                     <Route path=path!("/projects") view=Projects />
                     <Route path=path!("/") view=Home />
                     <Route path=path!("/team-ec-services") view=TeamECServices />
+                    <Route path=path!("/announcements") view=AnnouncementsPage />
                 </Routes>
             </Router>
         </div>
