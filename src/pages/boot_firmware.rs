@@ -37,7 +37,7 @@ pub fn BootFirmware() -> impl IntoView {
         },
     ];
 
-    let project_title = "Patina (Boot Firmware)";
+    let project_title = "Patina";
     let project_summary = "Modern Boot Firmware";
 
     let project_what = "Patina is a UEFI compatible firmware interface written in the Rust language with a focus on memory safety and composition. For Patina, we re-evaluated the good and the bad from today’s UEFI boot firmware and used this opportunity to embrace new language capabilities, software architecture, programming paradigms, and industry supported tooling. Patina isn't designed to replace everything necessary for system boot but instead to provide a sustainable path forward with high return on investment";
@@ -71,6 +71,7 @@ pub fn BootFirmware() -> impl IntoView {
                     project_summary=project_summary
                     project_what=project_what
                     project_why=project_why
+                    project_who="/team-patina"
                     big_image_url="/images/PatinaBackground.png"
                     small_image_url="/images/dark/ProjectIcon_P_Patina_DarkMode.svg"
                 />

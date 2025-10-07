@@ -75,6 +75,7 @@ It’s a modern foundation for building reliable, adaptable EC firmware — not 
             <div class="w-full min-h-screen" style="overflow-x: auto;">
                 <Header />
                 <ProjectIntroduction project_title=project_title project_summary=project_summary project_what=project_what project_why=project_why
+                    project_who="/team-ec"
                     big_image_url="/images/ECBackground.png"
                     small_image_url="/images/dark/ProjectIcon_EC_Patina_DarkMode.svg"/>
                 <RepositoryGraph nodes=nodes_data links=links_data/>

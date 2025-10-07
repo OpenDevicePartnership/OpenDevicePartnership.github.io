@@ -76,7 +76,7 @@ pub fn Main() -> impl IntoView {
                             "Learn how ODP projects help build secure, modern devices"
                         </span>
                     </div>
-                    <div class="w-full aspect-video rounded-lg overflow-hidden" style="max-width:100vw;">
+                    <div class="w-full lg:w-[1200px] aspect-video rounded-lg overflow-hidden" style="max-width:100vw;">
                         <iframe
                             class="w-full h-full"
                             style="border-radius: 10px; display: block;"
