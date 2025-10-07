@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use leptos_router::components::A;
 
 #[component]
 pub fn ProjectIntroduction(
@@ -6,6 +7,7 @@ pub fn ProjectIntroduction(
     #[prop(into)] project_summary: String,
     #[prop(into)] project_what: String,
     #[prop(into)] project_why: String,
+    #[prop(into)] project_who: String,
     #[prop(into, optional)] small_image_url: String,
     #[prop(into, optional)] big_image_url: String,
 ) -> impl IntoView {
@@ -14,14 +16,14 @@ pub fn ProjectIntroduction(
             <div class="flex flex-col md:flex-row gap-[80px]">
                 {/* Left Column: Big Picture with Overlayed Text and Small Image */}
                 <div
-                    class="relative w-full md:w-[1035px] h-[400px] md:h-[930px]"
+                    class="relative w-full md:w-[700px] h-[400px] md:h-[630px]"
                     style="margin-left: 0; padding-left: 0; flex-shrink: 0; position: relative; display: flex; align-items: center; justify-content: flex-start;"
                 >
                     {/* Big Picture */}
                     <img
                         src={big_image_url}
                         alt="Project Main"
-                        class="w-full h-[400px] md:w-[1035px] md:h-[930px]"
+                        class="w-full h-[400px] md:w-[700px] md:h-[630px]"
                         style="object-fit: cover; display: block; border-top-right-radius: 40px; border-bottom-right-radius: 40px;"
                     />
                     {/* Overlayed Text and Small Picture */}
@@ -51,7 +53,7 @@ pub fn ProjectIntroduction(
                     </div>
                 </div>
                 {/* Right Column */}
-                <div class="flex flex-col items-start px-2 md:px-0" style="width: 600px;">
+                <div class="flex flex-col items-start px-2 md:px-0 w-full">
                     {/* WHAT label */}
                     <span
                         class="mono"
@@ -92,6 +94,22 @@ pub fn ProjectIntroduction(
                     >
                         {project_why}
                     </span>
+                    {/* WHO label */}
+                    <span
+                        class="mono"
+                        style="
+                            display: block;
+                            text-align: left;
+                        "
+                    >
+                        {"WHO"}
+                    </span>
+                    {/* WHO description */}
+                    <div class="link_mobile md:link block text-left">
+                        <A href={project_who}>
+                            {"Learn more about the team →"}
+                        </A>
+                    </div>
                 </div>
             </div>
         </section>

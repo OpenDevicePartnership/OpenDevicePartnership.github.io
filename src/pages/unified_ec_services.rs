@@ -74,6 +74,7 @@ pub fn WindowsEcServices() -> impl IntoView {
             <div class="w-full min-h-screen" style="overflow-x: auto;">
                 <Header />
                 <ProjectIntroduction project_title=project_title project_summary=project_summary project_what=project_what project_why=project_why
+                    project_who="/team-ec-services"
                     big_image_url="/images/ECServicesBackground.png"
                     small_image_url="/images/dark/ProjectIcon_ES_Patina_DarkMode.svg" />
                 <RepositoryGraph nodes=nodes_data links=links_data/>
