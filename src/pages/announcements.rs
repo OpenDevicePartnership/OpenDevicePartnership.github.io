@@ -105,8 +105,8 @@ pub fn AnnouncementsPage() -> impl IntoView {
         <div class="flex flex-col w-full min-h-screen background_quaternary">
             <Header background_class="background_quaternary" />
             <div class="h2_mobile md:h1 px-4 md:px-10 pt-4 md:pt-20 pb-4 md:pb-20">Announcements</div>
-            <div class="flex flex-col md:flex-row w-full flex-1 relative">
-                <div class="w-full md:w-[450px] h-[300px] md:h-[700px] overflow-y-auto background_tertiary z-10 p-2 md:p-6 mb-4 md:mb-0">
+            <div class="flex flex-col lg:flex-row w-full flex-1 relative">
+                <div class="w-full lg:w-[450px] xl:w-[500px] min-h-[200px] lg:min-h-[600px] xl:min-h-[700px] overflow-y-auto background_tertiary z-10 p-2 md:p-4 lg:p-6 mb-4 lg:mb-0">
                     <ul class="space-y-2 md:space-y-4">
                         {announcements.iter().enumerate().map(|(i, (link, _, slug))| {
                             let navigate = navigate.clone();
@@ -127,7 +127,7 @@ pub fn AnnouncementsPage() -> impl IntoView {
                         }).collect::<Vec<_>>()}
                     </ul>
                 </div>
-                <div class="flex-1 h-[300px] md:h-[700px] background_primary rounded-tl-[30px] md:rounded-tl-[50px] -ml-0 md:-ml-16 z-20 overflow-y-auto p-4 md:p-10">
+                <div class="flex-1 min-h-[400px] lg:min-h-[600px] xl:min-h-[700px] background_primary rounded-tl-[20px] md:rounded-tl-[30px] lg:rounded-tl-[50px] -ml-0 lg:-ml-16 z-20 overflow-y-auto p-4 md:p-6 lg:p-10">
                     {move || {
                         let (title, content): (String, AnyView) = if let Some((_, title, slug)) = announcements.get(selected.get()) {
                             let content = match *slug {
