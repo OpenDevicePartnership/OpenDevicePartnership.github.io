@@ -39,10 +39,10 @@ pub fn WindowsEcServices() -> impl IntoView {
 
     let project_title = "Unified Embedded Controller Interface";
     let project_summary = "";
-    let project_what = "The Unified Windows EC Service interface defines runtime coordination between firmware components using async message-passing. 
+    let project_what = r#"The Unified Windows EC Service interface defines runtime coordination between firmware components using async message-passing. 
     Each service manages a domain — like power, battery, or host communication — and exposes a structured protocol. 
     Components register with services and receive commands for events, capabilities, and state changes. 
-    This model enables loosely coupled subsystems, observability, and test injection — without sacrificing platform coherence.";
+    This model enables loosely coupled subsystems, observability, and test injection — without sacrificing platform coherence. Learn more about EC Services on our <a href="https://github.com/OpenDevicePartnership/haf-ec-service" target="_blank" rel="noopener noreferrer" class="underline hover:no-underline">GitHub repository</a> and check out the <a href="https://opendevicepartnership.github.io/documentation/guide/intro/concepts/EC_Services.html" target="_blank" rel="noopener noreferrer" class="underline hover:no-underline">Documentation</a> page."#;
     let project_why = "Without a common interface, EC firmware becomes tangled and brittle. 
     Unified EC Services -- designed for Windows Platforms -- bring structure and predictability by defining how components interact at runtime. 
     With async protocols and policy-aware life cycles, they support clean separation of concerns and cross-subsystem coordination. 

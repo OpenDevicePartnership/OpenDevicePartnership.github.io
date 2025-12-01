@@ -71,8 +71,8 @@ pub fn ProjectIntroduction(
                             display: block;
                             text-align: left;
                         "
+                        inner_html=project_what
                     >
-                        {project_what}
                     </span>
                     {/* WHY label */}
                     <span
