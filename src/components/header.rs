@@ -1,4 +1,3 @@
-use crate::components::announce_banner::AnnounceBanner;
 use leptos::prelude::RwSignal;
 use leptos::prelude::*;
 use leptos_router::components::A;
@@ -51,7 +50,6 @@ pub fn Header(#[prop(optional, default = "header_background")] background_class:
                 <NavButton href="/home" label="Home" mobile=true/>
             </nav>
         </header>
-        <AnnounceBanner />
     }
 }
 
