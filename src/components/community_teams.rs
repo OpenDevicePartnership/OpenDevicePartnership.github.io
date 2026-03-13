@@ -1,7 +1,39 @@
+use crate::components::team_grid::{TeamGrid, TeamMember};
 use leptos::prelude::*;
+
+fn create_steering_committee() -> Vec<TeamMember> {
+    vec![
+        TeamMember {
+            first_name: "Karan",
+            last_name: "Dhillon",
+            role: "Member",
+            github_username: "dhillonk",
+            github_url: "https://github.com/dhillonk",
+            image_url: "https://github.com/dhillonk.png?size=200",
+        },
+        TeamMember {
+            first_name: "Jerry",
+            last_name: "Xie",
+            role: "Member",
+            github_username: "jerrysxie",
+            github_url: "https://github.com/jerrysxie",
+            image_url: "https://github.com/jerrysxie.png?size=200",
+        },
+        TeamMember {
+            first_name: "Michael",
+            last_name: "Kubacki",
+            role: "Member",
+            github_username: "makubacki",
+            github_url: "https://github.com/makubacki",
+            image_url: "https://github.com/makubacki.png?size=200",
+        },
+    ]
+}
 
 #[component]
 pub fn CommunityTeams() -> impl IntoView {
+    let steering_committee = create_steering_committee();
+
     view! {
         <section
             class="background_primary px-4 py-6 md:[120px]"
@@ -43,7 +75,7 @@ pub fn CommunityTeams() -> impl IntoView {
                 </div>
             </div>
 
-            {/* Row 3: Teams Image and Label */}
+            {/* Row 3: Teams Image */}
             <div class="flex flex-col items-left" style="margin-bottom: 80px;">
                 <picture>
                     <source srcset="/images/dark/teams.svg" media="(prefers-color-scheme: dark)" />
@@ -57,12 +89,25 @@ pub fn CommunityTeams() -> impl IntoView {
                     class="h2_mobile md:h2 break-words w-full"
                     style="display: flex; justify-content: left; align-items: left;"
                 >
+                    {"Steering Committee"}
+                </span>
+            </div>
+
+            {/* Row 4: Steering Committee Members */}
+            <TeamGrid members=steering_committee />
+
+            {/* Row 5: Teams Label */}
+            <div class="flex flex-col items-left" style="margin-bottom: 80px;">
+                <span
+                    class="h2_mobile md:h2 break-words w-full"
+                    style="display: flex; justify-content: left; align-items: left;"
+                >
                     {"Teams"}
                 </span>
             </div>
 
-            {/* Row 4: Teams */}
-            <div class="flex flex-col md:flex-row items-stretch" style="gap: 123px;">
+            {/* Row 6: Teams */}
+            <div class="flex flex-col md:flex-row items-stretch justify-center" style="gap: 175px;">
                 <div class="flex flex-col items-start h-full" style="width: 320px; min-height: 350px; justify-content: flex-start;">
                     <span
                         class="h3_mobile md:h3 break-words w-full"
