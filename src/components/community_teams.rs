@@ -107,7 +107,7 @@ pub fn CommunityTeams() -> impl IntoView {
             </div>
 
             {/* Row 6: Teams */}
-            <div class="flex flex-col md:flex-row items-stretch" style="gap: 123px;">
+            <div class="flex flex-col md:flex-row items-stretch justify-center" style="gap: 175px;">
                 <div class="flex flex-col items-start h-full" style="width: 320px; min-height: 350px; justify-content: flex-start;">
                     <span
                         class="h3_mobile md:h3 break-words w-full"
