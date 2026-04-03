@@ -1,4 +1,5 @@
 use crate::components::documentation_training::{DocLink, DocumentationTraining};
+use crate::components::partners_grid::PartnersGrid;
 use crate::components::footer::Footer;
 use crate::components::header::Header;
 use crate::components::main::Main;
@@ -56,6 +57,7 @@ pub fn Home() -> impl IntoView {
             <div class="w-full min-h-screen overflow-x-hidden">
                 <Header />
                 <Main />
+                <PartnersGrid />
                 <DocumentationTraining links=links />
                 <Footer />
             </div>
