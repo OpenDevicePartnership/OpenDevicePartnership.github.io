@@ -1,0 +1,329 @@
+/* Base layer for the redesign.
+ *
+ * Layout:
+ *   1. CSS reset (small, opinionated; not a full normalize)
+ *   2. @font-face declarations (self-hosted, from Tier 6)
+ *   3. Design tokens as CSS custom properties on :root (light theme)
+ *   4. Dark theme overrides on [data-theme="dark"]
+ *   5. prefers-reduced-motion overrides
+ *
+ * Design language:
+ *   * "Clean, warm, community-driven, confident."
+ *   * Light theme: warm off-white (-> bone) page, deep navy ink,
+ *     muted sage hairlines, sunset-amber accent for CTAs.
+ *   * Dark theme: deep ink-blue page, warm cream ink, slightly
+ *     lifted accent so it still pops on dark.
+ *   * Trust accent: a deep blue-grey reserved for security /
+ *     stability messaging (footer brand mark, project status).
+ */
+
+/* ---------------- 1. Reset ---------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    color-scheme: light dark;
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body);
+    line-height: var(--leading-body);
+    color: var(--color-ink-primary);
+    background: var(--color-surface-page);
+}
+
+body {
+    /* The root #app div fills the viewport; body just hosts it. */
+    display: flex;
+    flex-direction: column;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+    border-radius: var(--radius-sm);
+}
+
+/* ---------------- 2. Fonts ---------------- */
+/* Body / UI: Geist (variable, two subsets, self-hosted from Tier 6). */
+@font-face {
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("/fonts/geist-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+        U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("/fonts/geist-latin-ext.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF,
+        U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Display: Fraunces (variable serif from Undercase Type, OFL).
+ * Used sparingly for hero displays and section openers to bring
+ * editorial warmth without sacrificing the Geist-driven UI tone.
+ * Self-hosted from /fonts/fraunces-latin.woff2 (subset latin only;
+ * display sizes never need extended diacritics). */
+@font-face {
+    font-family: "Fraunces";
+    font-style: normal;
+    font-weight: 400 800;
+    font-display: swap;
+    src: url("/fonts/fraunces-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2122, U+2212;
+}
+
+/* ---------------- 3. Tokens (light theme = default) ---------------- */
+:root {
+    /* --- Type scale (clamp() for fluid typography) --- */
+    --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --font-mono: ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, monospace;
+
+    --font-size-display-xl: clamp(2.75rem, 1.6rem + 5.5vw, 5.5rem);
+    --font-size-display: clamp(2.25rem, 1.4rem + 4vw, 4rem);
+    --font-size-h1: clamp(1.875rem, 1.4rem + 2vw, 2.75rem);
+    --font-size-h2: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+    --font-size-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+    --font-size-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
+    --font-size-body: 1rem;
+    --font-size-small: 0.9375rem;
+    --font-size-caption: 0.8125rem;
+
+    --leading-display: 1.05;
+    --leading-heading: 1.18;
+    --leading-lead: 1.5;
+    --leading-body: 1.6;
+
+    /* --- Spacing (4px base) --- */
+    --space-gutter: clamp(1rem, 0.7rem + 1.4vw, 2rem);
+    --space-section-y: clamp(3rem, 2rem + 4vw, 6rem);
+    --space-section-x: clamp(1rem, 0.7rem + 1.4vw, 2rem);
+
+    /* --- Radius --- */
+    --radius-sm: 0.375rem; /* 6px  */
+    --radius-md: 0.625rem; /* 10px */
+    --radius-lg: 1rem; /* 16px */
+    --radius-xl: 1.5rem; /* 24px */
+    --radius-pill: 9999px;
+
+    /* --- Elevation: warm shadows (a touch of accent + low alpha) --- */
+    --shadow-1: 0 1px 2px rgba(28, 27, 33, 0.05), 0 1px 1px rgba(28, 27, 33, 0.04);
+    --shadow-2: 0 4px 14px -4px rgba(28, 27, 33, 0.08), 0 2px 4px -2px rgba(28, 27, 33, 0.05);
+    --shadow-3: 0 12px 28px -8px rgba(28, 27, 33, 0.12), 0 4px 10px -4px rgba(28, 27, 33, 0.06);
+    --shadow-4: 0 24px 48px -12px rgba(28, 27, 33, 0.16), 0 8px 18px -6px rgba(28, 27, 33, 0.08);
+    --shadow-focus: 0 0 0 3px var(--color-accent-soft), 0 0 0 4px var(--color-accent);
+
+    /* --- Motion --- */
+    --motion-fast: 120ms;
+    --motion-base: 200ms;
+    --motion-slow: 360ms;
+    --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+    --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+
+    /* --- Light-theme palette --- */
+    /* Backgrounds: warm bone, white cards, slight blush sunken */
+    --color-surface-page: #fbf8f4; /* warm off-white */
+    --color-surface-raised: #ffffff;
+    --color-surface-sunken: #f4eee6;
+    --color-surface-inverse: #161922; /* deep ink-blue */
+
+    /* Ink: deep navy, calm secondary, soft muted */
+    --color-ink-primary: #161922;
+    --color-ink-secondary: #3b4252;
+    --color-ink-muted: #6b7184;
+    --color-ink-inverse: #fbf8f4;
+    --color-ink-accent: #8a3a14; /* darker accent for inline link copy */
+
+    /* Borders: warm hairlines */
+    --color-border-subtle: #ebe2d4;
+    --color-border-strong: #c9bfae;
+    --color-border-accent: #d6651f;
+
+    /* Accent (warm sunset amber + soft halo) */
+    --color-accent: #d6651f; /* CTAs, focus rings */
+    --color-accent-soft: rgba(214, 101, 31, 0.15);
+    --color-accent-strong: #b85217;
+    --color-accent-ink: #ffffff; /* text on accent surfaces */
+
+    /* Trust (deep blue-grey for "stability" signals) */
+    --color-trust: #2d4a63;
+    --color-trust-soft: rgba(45, 74, 99, 0.1);
+
+    /* Per-project tag colours -- the old Patina green moves here */
+    --color-project-patina: #4ea375;
+    --color-project-ec: #c5784f;
+    --color-project-services: #7a6cb8;
+
+    /* Semantic */
+    --color-success: #3f8f60;
+    --color-warning: #c98a2a;
+    --color-danger: #b8443a;
+    --color-info: #3a6fb8;
+}
+
+/* ---------------- 4. Dark theme ---------------- */
+[data-theme="dark"] {
+    --color-surface-page: #11141c;
+    --color-surface-raised: #1a1e29;
+    --color-surface-sunken: #0a0c12;
+    --color-surface-inverse: #fbf8f4;
+
+    --color-ink-primary: #f5f1e8;
+    --color-ink-secondary: #c5c6cf;
+    --color-ink-muted: #8a8e9b;
+    --color-ink-inverse: #161922;
+    --color-ink-accent: #f3a55a;
+
+    --color-border-subtle: #262a36;
+    --color-border-strong: #393f50;
+    --color-border-accent: #f3a55a;
+
+    --color-accent: #f3a55a; /* slightly lifted on dark */
+    --color-accent-soft: rgba(243, 165, 90, 0.18);
+    --color-accent-strong: #ffbf7c;
+    --color-accent-ink: #161922;
+
+    --color-trust: #8eb5d1;
+    --color-trust-soft: rgba(142, 181, 209, 0.15);
+
+    --color-project-patina: #71c399;
+    --color-project-ec: #e6996e;
+    --color-project-services: #a899e0;
+
+    --color-success: #5fb988;
+    --color-warning: #e8b463;
+    --color-danger: #e07a72;
+    --color-info: #6fa4e8;
+
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2);
+    --shadow-2: 0 4px 14px -4px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+    --shadow-3: 0 12px 28px -8px rgba(0, 0, 0, 0.55), 0 4px 10px -4px rgba(0, 0, 0, 0.35);
+    --shadow-4: 0 24px 48px -12px rgba(0, 0, 0, 0.65), 0 8px 18px -6px rgba(0, 0, 0, 0.4);
+}
+
+/* Use the system preference if no explicit choice has been made
+ * (the JS sets data-theme on <html> on first paint; this is a
+ * no-flash fallback for the very first render before JS runs). */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+        --color-surface-page: #11141c;
+        --color-surface-raised: #1a1e29;
+        --color-surface-sunken: #0a0c12;
+        --color-surface-inverse: #fbf8f4;
+
+        --color-ink-primary: #f5f1e8;
+        --color-ink-secondary: #c5c6cf;
+        --color-ink-muted: #8a8e9b;
+        --color-ink-inverse: #161922;
+        --color-ink-accent: #f3a55a;
+
+        --color-border-subtle: #262a36;
+        --color-border-strong: #393f50;
+        --color-border-accent: #f3a55a;
+
+        --color-accent: #f3a55a;
+        --color-accent-soft: rgba(243, 165, 90, 0.18);
+        --color-accent-strong: #ffbf7c;
+        --color-accent-ink: #161922;
+
+        --color-trust: #8eb5d1;
+        --color-trust-soft: rgba(142, 181, 209, 0.15);
+
+        --color-project-patina: #71c399;
+        --color-project-ec: #e6996e;
+        --color-project-services: #a899e0;
+
+        --color-success: #5fb988;
+        --color-warning: #e8b463;
+        --color-danger: #e07a72;
+        --color-info: #6fa4e8;
+    }
+}
+
+/* ---------------- 5. Reduced motion ---------------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ---------------- 6. Selection ---------------- */
+::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-ink-primary);
+}
