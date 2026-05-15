@@ -84,6 +84,9 @@ export default defineConfig({
                 patina: "var(--color-project-patina)",
                 ec: "var(--color-project-ec)",
                 services: "var(--color-project-services)",
+                "patina-ink": "var(--color-project-patina-ink)",
+                "ec-ink": "var(--color-project-ec-ink)",
+                "services-ink": "var(--color-project-services-ink)",
             },
             // Semantic.
             success: "var(--color-success)",

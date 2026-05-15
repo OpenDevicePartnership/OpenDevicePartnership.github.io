@@ -173,7 +173,7 @@ fn MobileDrawer(open: RwSignal<bool>, close: Callback<()>) -> impl IntoView {
         <div
             class=uno![
                 "fixed inset-0 z-30 lg:hidden",
-                "bg-surface-inverse/40 backdrop-blur-sm",
+                "backdrop-blur-md",
                 "transition-opacity duration-200"
             ]
             style:display=move || if open.get() { "block" } else { "none" }

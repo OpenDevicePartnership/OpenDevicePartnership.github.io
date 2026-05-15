@@ -216,6 +216,11 @@ ol {
     --color-project-patina: #4ea375;
     --color-project-ec: #c5784f;
     --color-project-services: #7a6cb8;
+    /* Darker variants used for tag *text* so the label still hits AA
+       contrast against the soft (15% alpha) tag background. */
+    --color-project-patina-ink: #2f6a4a;
+    --color-project-ec-ink: #8a4a25;
+    --color-project-services-ink: #4d3f8a;
 
     /* Semantic */
     --color-success: #3f8f60;
@@ -252,6 +257,12 @@ ol {
     --color-project-patina: #71c399;
     --color-project-ec: #e6996e;
     --color-project-services: #a899e0;
+    /* On dark surfaces the bright project hue is already high
+       contrast on the soft (18% alpha) tag background, so the ink
+       variant matches the base hue. */
+    --color-project-patina-ink: #71c399;
+    --color-project-ec-ink: #e6996e;
+    --color-project-services-ink: #a899e0;
 
     --color-success: #5fb988;
     --color-warning: #e8b463;
@@ -295,6 +306,9 @@ ol {
         --color-project-patina: #71c399;
         --color-project-ec: #e6996e;
         --color-project-services: #a899e0;
+        --color-project-patina-ink: #71c399;
+        --color-project-ec-ink: #e6996e;
+        --color-project-services-ink: #a899e0;
 
         --color-success: #5fb988;
         --color-warning: #e8b463;

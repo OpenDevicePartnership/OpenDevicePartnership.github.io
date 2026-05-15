@@ -124,9 +124,9 @@ pub fn Tag(
         TagTone::Neutral => uno!("bg-surface-sunken text-ink-secondary"),
         TagTone::Accent => uno!("bg-accent-soft text-ink-accent"),
         TagTone::Trust => uno!("bg-trust-soft text-trust"),
-        TagTone::Patina => "bg-[var(--color-project-patina)]/15 text-[var(--color-project-patina)]".to_string(),
-        TagTone::Ec => "bg-[var(--color-project-ec)]/15 text-[var(--color-project-ec)]".to_string(),
-        TagTone::Services => "bg-[var(--color-project-services)]/15 text-[var(--color-project-services)]".to_string(),
+        TagTone::Patina => "bg-[var(--color-project-patina)]/15 text-[var(--color-project-patina-ink)]".to_string(),
+        TagTone::Ec => "bg-[var(--color-project-ec)]/15 text-[var(--color-project-ec-ink)]".to_string(),
+        TagTone::Services => "bg-[var(--color-project-services)]/15 text-[var(--color-project-services-ink)]".to_string(),
     };
     let final_class = format!(
         "{} {tone_class} {class}",
