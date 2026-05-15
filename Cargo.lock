@@ -133,6 +133,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
+name = "classes"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5603d514e43c7439b594a021fa63bf6bfde2b47b6af966023624fd777d4dd8b3"
+
+[[package]]
 name = "codee"
 version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1012,6 +1018,7 @@ dependencies = [
  "leptos_meta",
  "leptos_router",
  "serde_json",
+ "unocss-classes",
  "wasm-bindgen",
  "wasm-bindgen-futures",
  "wasm-bindgen-test",
@@ -1288,6 +1295,12 @@ dependencies = [
  "memchr",
  "regex-syntax",
 ]
+
+[[package]]
+name = "regex-lite"
+version = "0.1.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "cab834c73d247e67f4fae452806d17d3c7501756d98c8808d7c9c7aa7d18f973"
 
 [[package]]
 name = "regex-syntax"
@@ -1713,6 +1726,38 @@ name = "unicode-xid"
 version = "0.2.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ebc1c04c71510c7f702b52b7c350734c9ff1295c464a03335b00bb84fc54f853"
+
+[[package]]
+name = "unocss-classes"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "034c7e51f6e631ac4da2b365acd8f614f4ab6415db421f1ebbef8b579b2bfae4"
+dependencies = [
+ "classes",
+ "unocss-classes-macros",
+]
+
+[[package]]
+name = "unocss-classes-macros"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "878280153455c4801d3e33f268335f166cce60b92c22ce4ae83010d2f25cd160"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+ "unocss-classes-utils",
+]
+
+[[package]]
+name = "unocss-classes-utils"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a933cd049d632b1070477be454c2f9c49c1cf2e76b638094bb2e4df459c34a42"
+dependencies = [
+ "once_cell",
+ "regex-lite",
+]
 
 [[package]]
 name = "url"

@@ -8,6 +8,7 @@ console_error_panic_hook = "0.1.7"
 leptos = { version = "0.8.2", features = ["csr"] }
 leptos_meta = "0.8.2"
 leptos_router = "0.8.2"
+unocss-classes = "2"
 wasm-bindgen = "0.2.100"
 # All the web-sys features we use directly (Window, Document, Console)
 # are already enabled transitively by leptos's `csr` feature, so we
