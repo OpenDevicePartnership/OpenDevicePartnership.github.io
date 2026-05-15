@@ -1,20 +1,17 @@
-pub mod announce_banner;
-pub mod community_teams;
-pub mod documentation_training;
-pub mod footer;
-pub mod header;
-pub mod image_button;
-pub mod landing;
-pub mod landing_page;
-pub mod main;
-pub mod partner;
-pub mod partners_grid;
-pub mod project_introduction;
-pub mod projects_component;
+//! Components for the redesigned ODP website.
+//!
+//! The module tree is intentionally flat: each file groups closely
+//! related primitives (layout, typography, controls, media, ...) so
+//! a contributor can find a component without spelunking through a
+//! deep folder hierarchy. The `repo_view` module is the lone
+//! third-party-integration outlier and stays at the top level.
+
+pub mod cards;
+pub mod controls;
+pub mod layout;
+pub mod media;
+pub mod nav;
+pub mod project_layout;
 pub mod repo_view;
-pub mod section;
-pub mod site_shell;
-pub mod team_grid;
-pub mod team_hero;
-pub mod themed_icon;
-pub mod ui;
+pub mod theme;
+pub mod typography;

@@ -127,25 +127,18 @@ ol {
         U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* Display: Fraunces (variable serif from Undercase Type, OFL).
- * Used sparingly for hero displays and section openers to bring
- * editorial warmth without sacrificing the Geist-driven UI tone.
- * Self-hosted from /fonts/fraunces-latin.woff2 (subset latin only;
- * display sizes never need extended diacritics). */
-@font-face {
-    font-family: "Fraunces";
-    font-style: normal;
-    font-weight: 400 800;
-    font-display: swap;
-    src: url("/fonts/fraunces-latin.woff2") format("woff2");
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2122, U+2212;
-}
+/* Display: a warm humanist serif via system fallbacks (Iowan Old
+ * Style on macOS/iOS, Palatino Linotype on Windows, Georgia
+ * elsewhere). Self-hosted Fraunces was considered but kept out of
+ * scope to avoid shipping another ~50 KB of woff2; the system
+ * serifs are warm enough to sit alongside Geist for editorial
+ * display headings without feeling cold. */
 
 /* ---------------- 3. Tokens (light theme = default) ---------------- */
 :root {
     /* --- Type scale (clamp() for fluid typography) --- */
     --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    --font-display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
     --font-mono: ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, monospace;
 
     --font-size-display-xl: clamp(2.75rem, 1.6rem + 5.5vw, 5.5rem);

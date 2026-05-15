@@ -15,7 +15,7 @@ wasm-bindgen = "0.2.100"
 # don't need to opt into them again here. We still depend on web-sys
 # directly for the `web_sys::js_sys` re-export and `web_sys::window()`
 # in `repo_view.rs`.
-web-sys = "0.3.77"
+web-sys = { version = "0.3.77", features = ["Storage", "MediaQueryList"] }
 
 [dev-dependencies]
 js-sys = "0.3"

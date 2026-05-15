@@ -1,18 +1,15 @@
-use crate::components::team_grid::TeamGrid;
-use crate::components::team_hero::TeamHero;
 use crate::data::teams::ec_team;
-
+use crate::pages::team_page::TeamPage;
 use leptos::prelude::*;
 
 #[component]
 pub fn TeamEC() -> impl IntoView {
-    let team = ec_team();
-
     view! {
-        <TeamHero
-            team_name="Secure EC team"
-            description="Developing and managing secure EC internals"
+        <TeamPage
+            eyebrow="Secure EC working group"
+            title="Embedded controllers, hardened."
+            description="Developing and managing secure EC internals."
+            members=ec_team()
         />
-        <TeamGrid members=team />
     }
 }

@@ -73,5 +73,5 @@ open = false
 # pulling, then Trunk handles the rest.
 [[hooks]]
 stage = "pre_build"
-command = "npm"
-command_arguments = ["run", "--silent", "build:css"]
+command = "cmd"
+command_arguments = ["/C", "npm", "run", "--silent", "build:css"]
