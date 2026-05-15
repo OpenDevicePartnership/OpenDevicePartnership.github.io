@@ -156,6 +156,15 @@ jobs:
       - name: Cache cargo registry and target
         uses: Swatinem/rust-cache@v2
 
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install npm dependencies (UnoCSS)
+        run: npm ci
+
       - name: Install Trunk
         run: |
           wget -qO- https://github.com/trunk-rs/trunk/releases/download/v0.21.14/trunk-x86_64-unknown-linux-gnu.tar.gz \
@@ -195,7 +204,8 @@ jobs:
             fi
           }
           check 'odp-*_bg.wasm'       'wasm'             230
-          check 'tailwind-*.css'      'tailwind CSS'      10
+          check 'base-*.css'          'base CSS'           5
+          check 'uno.generated-*.css' 'UnoCSS bundle'     10
           check 'repo_graph.css'      'repo_graph CSS'     2
           check 'odp-*.js'            'wasm-bindgen JS'   20
           if [ "$fail" -ne 0 ]; then
