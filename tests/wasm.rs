@@ -1,3 +1,5 @@
+#![cfg(target_arch = "wasm32")]
+
 //! Headless wasm-bindgen tests for the redesigned site.
 //!
 //! Smoke-level tests that render a few key components into the DOM
