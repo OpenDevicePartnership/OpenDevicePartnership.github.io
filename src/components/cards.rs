@@ -17,6 +17,12 @@ use unocss_classes::uno;
 /// consistent regardless of the source image's intrinsic ratio.
 #[component]
 pub fn ProjectCard(project: &'static ProjectCopy, tone: TagTone) -> impl IntoView {
+    let monogram_class = match tone {
+        TagTone::Patina => "bg-[var(--color-project-patina)]/12 text-[var(--color-project-patina-ink)]",
+        TagTone::Ec => "bg-[var(--color-project-ec)]/12 text-[var(--color-project-ec-ink)]",
+        TagTone::Services => "bg-[var(--color-project-services)]/12 text-[var(--color-project-services-ink)]",
+        _ => "bg-surface-sunken text-ink-primary",
+    };
     view! {
         <A href=project.route attr:class="group block">
             <Surface
@@ -24,16 +30,21 @@ pub fn ProjectCard(project: &'static ProjectCopy, tone: TagTone) -> impl IntoVie
                 elevation=SurfaceElevation::E1
                 class="h-full flex flex-col gap-5 group-hover:(shadow-elev-3 -translate-y-0.5) transition-all duration-300"
             >
-                <div class=uno![
-                    "aspect-square w-full overflow-hidden rounded-md",
-                    "bg-surface-sunken flex items-center justify-center"
-                ]>
-                    <img
-                        src=project.small_image_url
-                        alt=""
-                        class="w-3/4 h-3/4 object-contain"
-                        loading="lazy"
-                    />
+                <div class=format!(
+                    "{} {monogram_class}",
+                    uno!(
+                        "aspect-square w-full overflow-hidden rounded-md",
+                        "flex items-center justify-center select-none"
+                    ),
+                )>
+                    <span
+                        class=uno!(
+                            "font-display font-medium leading-none tracking-tight text-[clamp(3rem,7vw,5rem)]"
+                        )
+                        aria-hidden="true"
+                    >
+                        {project.monogram}
+                    </span>
                 </div>
                 <div class=uno!("flex flex-col gap-3")>
                     <Tag tone=tone>{project.short_label}</Tag>

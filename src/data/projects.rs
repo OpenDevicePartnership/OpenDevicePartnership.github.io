@@ -18,6 +18,9 @@ pub struct ProjectCopy {
     pub team_route: &'static str,
     pub big_image_url: &'static str,
     pub small_image_url: &'static str,
+    /// Single- or two-letter monogram drawn into card thumbnails so
+    /// we don't depend on the (only-dark) project icon images.
+    pub monogram: &'static str,
     pub nodes_json: &'static str,
     pub links_json: &'static str,
 }
@@ -32,6 +35,7 @@ pub const PATINA: ProjectCopy = ProjectCopy {
     team_route: "/team-patina",
     big_image_url: "/images/PatinaBackground.webp",
     small_image_url: "/images/dark/ProjectIcon_P_Patina_DarkMode.webp",
+    monogram: "P",
     nodes_json: include_str!("../../data/graphs/patina_nodes.json"),
     links_json: include_str!("../../data/graphs/patina_links.json"),
 };
@@ -52,6 +56,7 @@ It’s a modern foundation for building reliable, adaptable EC firmware — not 
     team_route: "/team-ec",
     big_image_url: "/images/ECBackground.webp",
     small_image_url: "/images/dark/ProjectIcon_EC_Patina_DarkMode.webp",
+    monogram: "EC",
     nodes_json: include_str!("../../data/graphs/ec_nodes.json"),
     links_json: include_str!("../../data/graphs/ec_links.json"),
 };
@@ -72,6 +77,7 @@ pub const EC_SERVICES: ProjectCopy = ProjectCopy {
     team_route: "/team-ec-services",
     big_image_url: "/images/ECServicesBackground.webp",
     small_image_url: "/images/dark/ProjectIcon_ES_Patina_DarkMode.webp",
+    monogram: "ES",
     nodes_json: include_str!("../../data/graphs/ec_services_nodes.json"),
     links_json: include_str!("../../data/graphs/ec_services_links.json"),
 };
