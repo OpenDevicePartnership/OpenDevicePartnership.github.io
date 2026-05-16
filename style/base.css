@@ -260,9 +260,9 @@ ol {
     /* On dark surfaces the bright project hue is already high
        contrast on the soft (18% alpha) tag background, so the ink
        variant matches the base hue. */
-    --color-project-patina-ink: #71c399;
-    --color-project-ec-ink: #e6996e;
-    --color-project-services-ink: #a899e0;
+    --color-project-patina: #9be2bf;
+    --color-project-ec: #f5bfa0;
+    --color-project-services: #cbbcf3;
 
     --color-success: #5fb988;
     --color-warning: #e8b463;

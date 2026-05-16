@@ -18,9 +18,9 @@ use unocss_classes::uno;
 #[component]
 pub fn ProjectCard(project: &'static ProjectCopy, tone: TagTone) -> impl IntoView {
     let monogram_class = match tone {
-        TagTone::Patina => "bg-[var(--color-project-patina)]/12 text-[var(--color-project-patina-ink)]",
-        TagTone::Ec => "bg-[var(--color-project-ec)]/12 text-[var(--color-project-ec-ink)]",
-        TagTone::Services => "bg-[var(--color-project-services)]/12 text-[var(--color-project-services-ink)]",
+        TagTone::Patina => "bg-[var(--color-project-patina)] text-[var(--color-project-patina-ink)]",
+        TagTone::Ec => "bg-[var(--color-project-ec)] text-[var(--color-project-ec-ink)]",
+        TagTone::Services => "bg-[var(--color-project-services)] text-[var(--color-project-services-ink)]",
         _ => "bg-surface-sunken text-ink-primary",
     };
     view! {
