@@ -105,6 +105,14 @@ ol {
     border-radius: var(--radius-sm);
 }
 
+[data-theme="dark"] .logo-light {
+  display: none;
+}
+
+[data-theme="light"] .logo-dark {
+  display: none;
+}
+
 /* ---------------- 2. Fonts ---------------- */
 /* Body / UI: Geist (variable, two subsets, self-hosted from Tier 6). */
 @font-face {
