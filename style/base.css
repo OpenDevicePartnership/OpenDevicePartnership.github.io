@@ -230,8 +230,8 @@ ol {
     --color-project-ec: light-dark(#f4ed7e, #604b13);
     --color-project-ec-ink: light-dark(#a26310, #e4b53f);
 
-    --color-project-services: light-dark(#aa3e74, #f0aac5);
-    --color-project-services-ink: light-dark(#fad6ef, #613a50);
+    --color-project-services: light-dark(#375cc6, #57aff6);
+    --color-project-services-ink: light-dark(#cce4f2, #384862);
 
     /* Semantic. */
     --color-success: light-dark(#007a0a, #6fd560);

@@ -221,7 +221,7 @@ jobs:
         run: |
           set -euo pipefail
           css=$(ls dist/uno.generated-*.css | head -n1)
-          required="i-lucide-moon i-lucide-sun i-lucide-menu i-lucide-x i-lucide-arrow-right i-lucide-github"
+          required="i-lucide-moon i-lucide-sun i-lucide-menu i-lucide-x i-lucide-arrow-right i-lucide-github i-lucide-play"
           missing=""
           for cls in $required; do
             grep -qF ".$cls" "$css" || missing="$missing $cls"

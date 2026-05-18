@@ -161,7 +161,7 @@ fn ContributeSection() -> impl IntoView {
             <Container>
                 <Stack gap=StackGap::Lg>
                     <Eyebrow>"Contribute"</Eyebrow>
-                    <Heading level=HeadingLevel::H2>"Three ways to start."</Heading>
+                    <Heading level=HeadingLevel::H2>"Ways to start."</Heading>
                     <Grid min=GridMin::Md gap=StackGap::Lg>
                         <DocCard
                             href="https://github.com/OpenDevicePartnership"
@@ -179,6 +179,12 @@ fn ContributeSection() -> impl IntoView {
                             href="/getting-started"
                             title="Read the getting-started guide"
                             description="A short walkthrough that orients new contributors to the projects, the docs, and the working groups."
+                        />
+                        <DocCard
+                            href="https://www.youtube.com/@OpenDevicePartnership"
+                            title="ODP on YouTube"
+                            description="Talks, demos, and recordings from working group sessions."
+                            external=true
                         />
                     </Grid>
                 </Stack>

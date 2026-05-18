@@ -287,6 +287,12 @@ pub fn Footer() -> impl IntoView {
                         <FooterLink href="https://discord.gg/a8cEfTDQN4" external=true>
                             "Discord"
                         </FooterLink>
+                        <FooterLink
+                            href="https://www.youtube.com/@OpenDevicePartnership"
+                            external=true
+                        >
+                            "YouTube"
+                        </FooterLink>
                     </FooterColumn>
                 </div>
 
@@ -325,6 +331,15 @@ pub fn Footer() -> impl IntoView {
                             class=uno!("hover:text-ink-primary transition-colors")
                         >
                             <BrandIcon name="discord" class="w-4 h-4" />
+                        </a>
+                        <a
+                            href="https://www.youtube.com/@OpenDevicePartnership"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="YouTube"
+                            class=uno!("hover:text-ink-primary transition-colors")
+                        >
+                            <BrandIcon name="youtube" class="w-4 h-4" />
                         </a>
                     </div>
                 </div>

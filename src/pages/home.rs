@@ -10,6 +10,7 @@ use crate::components::controls::{ArrowLink, LinkButton, TagTone};
 use crate::components::layout::{
     Cluster, Container, ContainerWidth, Grid, GridMin, Section, SectionSurface, Stack, StackGap,
 };
+use crate::components::media::VideoFacade;
 use crate::components::typography::{Body, BodyTone, Display, DisplaySize, Eyebrow, Heading, HeadingLevel};
 use crate::data::projects::{EC_SERVICES, EMBEDDED_CONTROLLER, PATINA};
 use leptos::prelude::*;
@@ -31,12 +32,17 @@ fn HomeHero() -> impl IntoView {
     view! {
         <Section class="pt-16 md:pt-24">
             <Container>
-                <div class=uno!("grid gap-10 md:gap-16 md:grid-cols-[1.2fr_1fr] items-end")>
+                <div class=uno!("grid gap-10 md:gap-16 md:grid-cols-[1fr_1.1fr] items-center")>
                     <Stack gap=StackGap::Lg>
                         <Eyebrow>"Open Device Partnership"</Eyebrow>
                         <Display size=DisplaySize::Xl>
                             "An open collaboration for secure, modern devices."
                         </Display>
+                        <p class=uno!(
+                            "text-lead text-ink-secondary max-w-[50ch]"
+                        )>
+                            "A global initiative making it easier to ship secure, efficient, and reliable client devices across silicon, OS, and platform boundaries."
+                        </p>
                         <Cluster gap=StackGap::Sm>
                             <LinkButton href="/getting-started"
                                 .to_string()>
@@ -49,18 +55,10 @@ fn HomeHero() -> impl IntoView {
                             <ArrowLink href="/projects".to_string()>"See the projects"</ArrowLink>
                         </Cluster>
                     </Stack>
-                    <Stack gap=StackGap::Md class="md:pb-3">
-                        <p class=uno!(
-                            "text-lead text-ink-secondary max-w-[50ch]"
-                        )>
-                            "ODP is a global initiative making it easier for developers and device makers to ship secure, efficient, and reliable client devices across silicon, OS, and platform boundaries."
-                        </p>
-                        <p class=uno!(
-                            "text-body text-ink-secondary max-w-[50ch]"
-                        )>
-                            "By combining open standards with collaborative development, we reduce complexity, harden the foundations, and accelerate innovation."
-                        </p>
-                    </Stack>
+                    <VideoFacade
+                        youtube_id="FMlPxYSY1LM"
+                        title="Open Device Partnership — introduction"
+                    />
                 </div>
             </Container>
         </Section>
