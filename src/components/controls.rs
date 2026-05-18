@@ -3,6 +3,7 @@
 
 use leptos::ev;
 use leptos::prelude::*;
+use leptos_router::components::A;
 use unocss_classes::uno;
 
 #[derive(Clone, Copy, Default, PartialEq, Eq)]
@@ -75,12 +76,20 @@ pub fn LinkButton(
     children: Children,
 ) -> impl IntoView {
     let final_class = format!("{} {class}", button_classes(variant, size));
-    let target = if external { Some("_blank") } else { None };
-    let rel = if external { Some("noopener noreferrer") } else { None };
-    view! {
-        <a href=href class=final_class target=target rel=rel>
-            {children()}
-        </a>
+    if external {
+        view! {
+            <a href=href class=final_class target="_blank" rel="noopener noreferrer">
+                {children()}
+            </a>
+        }
+        .into_any()
+    } else {
+        view! {
+            <A href=href attr:class=final_class>
+                {children()}
+            </A>
+        }
+        .into_any()
     }
 }
 
@@ -127,8 +136,6 @@ pub fn ArrowLink(
     #[prop(into, optional)] class: String,
     children: Children,
 ) -> impl IntoView {
-    let target = if external { Some("_blank") } else { None };
-    let rel = if external { Some("noopener noreferrer") } else { None };
     let final_class = format!(
         "{} {class}",
         uno!(
@@ -137,18 +144,31 @@ pub fn ArrowLink(
             "transition-colors duration-200"
         )
     );
-    view! {
-        <a href=href class=final_class target=target rel=rel>
-            <span>{children()}</span>
-            <span
-                class=uno![
-                    "i-lucide-arrow-up-right w-4 h-4 text-ink-muted",
-                    "group-hover:(text-accent translate-x-0.5 translate-y--0.5)",
-                    "transition-transform duration-200"
-                ]
-                aria-hidden="true"
-            ></span>
-        </a>
+    let inner = view! {
+        <span>{children()}</span>
+        <span
+            class=uno![
+                "i-lucide-arrow-up-right w-4 h-4 text-ink-muted",
+                "group-hover:(text-accent translate-x-0.5 translate-y--0.5)",
+                "transition-transform duration-200"
+            ]
+            aria-hidden="true"
+        ></span>
+    };
+    if external {
+        view! {
+            <a href=href class=final_class target="_blank" rel="noopener noreferrer">
+                {inner}
+            </a>
+        }
+        .into_any()
+    } else {
+        view! {
+            <A href=href attr:class=final_class>
+                {inner}
+            </A>
+        }
+        .into_any()
     }
 }
 
@@ -160,15 +180,23 @@ pub fn InlineLink(
     #[prop(into, optional)] class: String,
     children: Children,
 ) -> impl IntoView {
-    let target = if external { Some("_blank") } else { None };
-    let rel = if external { Some("noopener noreferrer") } else { None };
     let final_class = format!(
         "{} {class}",
         uno!("text-ink-accent underline decoration-from-font underline-offset-4 hover:decoration-2")
     );
-    view! {
-        <a href=href class=final_class target=target rel=rel>
-            {children()}
-        </a>
+    if external {
+        view! {
+            <a href=href class=final_class target="_blank" rel="noopener noreferrer">
+                {children()}
+            </a>
+        }
+        .into_any()
+    } else {
+        view! {
+            <A href=href attr:class=final_class>
+                {children()}
+            </A>
+        }
+        .into_any()
     }
 }
