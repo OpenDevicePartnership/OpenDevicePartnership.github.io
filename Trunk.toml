@@ -36,7 +36,7 @@ watch = []
 # and immediately re-trigger another build, looping forever. Same for
 # `node_modules` (npm install churns it on its own schedule) and
 # `dist` (Trunk's own output).
-ignore = ["node_modules", "dist"]
+ignore = ["style/uno.generated.css", "node_modules", "dist"]
 
 [serve]
 # The address to serve on.

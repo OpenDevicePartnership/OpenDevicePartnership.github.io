@@ -221,14 +221,14 @@ ol {
     --color-trust-soft: rgba(45, 74, 99, 0.1);
 
     /* Per-project tag colours -- the old Patina green moves here */
-    --color-project-patina: #4ea375;
-    --color-project-ec: #c5784f;
-    --color-project-services: #7a6cb8;
+    --color-project-patina: #5CBD89;
+    --color-project-ec: #F29361;
+    --color-project-services: #AA97FF;
     /* Darker variants used for tag *text* so the label still hits AA
-       contrast against the soft (15% alpha) tag background. */
-    --color-project-patina-ink: #2f6a4a;
-    --color-project-ec-ink: #8a4a25;
-    --color-project-services-ink: #4d3f8a;
+       contrast against the soft tag background. */
+    --color-project-patina-ink: #123221;
+    --color-project-ec-ink: #592819;
+    --color-project-services-ink: #312859;
 
     /* Semantic */
     --color-success: #3f8f60;
@@ -240,7 +240,7 @@ ol {
 /* ---------------- 4. Dark theme ---------------- */
 [data-theme="dark"] {
     --color-surface-page: #11141c;
-    --color-surface-raised: #1a1e29;
+    --color-surface-raised: #2a2f40;
     --color-surface-sunken: #0a0c12;
     --color-surface-inverse: #fbf8f4;
 
@@ -262,15 +262,14 @@ ol {
     --color-trust: #8eb5d1;
     --color-trust-soft: rgba(142, 181, 209, 0.15);
 
-    --color-project-patina: #71c399;
-    --color-project-ec: #e6996e;
-    --color-project-services: #a899e0;
-    /* On dark surfaces the bright project hue is already high
-       contrast on the soft (18% alpha) tag background, so the ink
-       variant matches the base hue. */
-    --color-project-patina: #9be2bf;
-    --color-project-ec: #f5bfa0;
-    --color-project-services: #cbbcf3;
+    --color-project-patina: #123221;
+    --color-project-ec: #592819;
+    --color-project-services: #312859;
+    /* Brighter variants used for tag *text* so the label still hits AA
+       contrast against the soft tag background. */
+    --color-project-patina-ink: #4cbd89;
+    --color-project-ec-ink: #F29361;
+    --color-project-services-ink: #AA97FF;
 
     --color-success: #5fb988;
     --color-warning: #e8b463;
