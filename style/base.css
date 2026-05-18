@@ -1,20 +1,28 @@
-/* Base layer for the redesign.
+/* Base layer for the ODP site.
  *
- * Layout:
- *   1. CSS reset (small, opinionated; not a full normalize)
- *   2. @font-face declarations (self-hosted, from Tier 6)
- *   3. Design tokens as CSS custom properties on :root (light theme)
- *   4. Dark theme overrides on [data-theme="dark"]
+ * Sections:
+ *   1. Reset (small, opinionated; not a full normalize)
+ *   2. @font-face declarations (self-hosted Geist)
+ *   3. Design tokens on :root
+ *        - Non-color tokens (type, spacing, radius, motion).
+ *        - Color tokens, expressed once with `light-dark(<light>, <dark>)`
+ *          so the dark theme inherits without a parallel token block.
+ *   4. Theme attribute hooks (set color-scheme; logo visibility)
  *   5. prefers-reduced-motion overrides
+ *   6. ::selection
  *
- * Design language:
- *   * "Clean, warm, community-driven, confident."
- *   * Light theme: warm off-white (-> bone) page, deep navy ink,
- *     muted sage hairlines, sunset-amber accent for CTAs.
- *   * Dark theme: deep ink-blue page, warm cream ink, slightly
- *     lifted accent so it still pops on dark.
- *   * Trust accent: a deep blue-grey reserved for security /
- *     stability messaging (footer brand mark, project status).
+ * Palette: sampled from Protesilaos' ef-themes `melissa-light` and
+ * `melissa-dark`. Warm cream + amber on light; deep brown + cream +
+ * amber on dark. Contrast for body-size text on the page surface is
+ * >= 4.5:1 (most pairs are >= 6:1).
+ *
+ * Why `light-dark()` instead of `[data-theme="dark"]` overrides?
+ *   The function resolves against the element's used `color-scheme`,
+ *   so a single token line drives both themes. Setting
+ *   `color-scheme: light dark` on :root means we follow the OS until
+ *   JS pins `data-theme=...`, at which point the theme overrides
+ *   `color-scheme` and `light-dark()` picks the matching colour --
+ *   no parallel `@media (prefers-color-scheme: dark)` block needed.
  */
 
 /* ---------------- 1. Reset ---------------- */
@@ -38,7 +46,6 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    color-scheme: light dark;
     font-family: var(--font-sans);
     font-size: var(--font-size-body);
     line-height: var(--leading-body);
@@ -47,7 +54,6 @@ html {
 }
 
 body {
-    /* The root #app div fills the viewport; body just hosts it. */
     display: flex;
     flex-direction: column;
 }
@@ -105,16 +111,7 @@ ol {
     border-radius: var(--radius-sm);
 }
 
-[data-theme="dark"] .logo-light {
-  display: none;
-}
-
-[data-theme="light"] .logo-dark {
-  display: none;
-}
-
 /* ---------------- 2. Fonts ---------------- */
-/* Body / UI: Geist (variable, two subsets, self-hosted from Tier 6). */
 @font-face {
     font-family: "Geist";
     font-style: normal;
@@ -135,16 +132,17 @@ ol {
         U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
-/* Display: a warm humanist serif via system fallbacks (Iowan Old
- * Style on macOS/iOS, Palatino Linotype on Windows, Georgia
- * elsewhere). Self-hosted Fraunces was considered but kept out of
- * scope to avoid shipping another ~50 KB of woff2; the system
- * serifs are warm enough to sit alongside Geist for editorial
- * display headings without feeling cold. */
+/* Display face is a system humanist serif via the font stack -- no
+ * extra @font-face needed. */
 
-/* ---------------- 3. Tokens (light theme = default) ---------------- */
+/* ---------------- 3. Tokens ---------------- */
 :root {
-    /* --- Type scale (clamp() for fluid typography) --- */
+    /* Tells `light-dark()` which value to use (and gives the UA a
+     * sensible default form-control palette). [data-theme=*] below
+     * pins this when the user makes an explicit choice. */
+    color-scheme: light dark;
+
+    /* --- Type --- */
     --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
     --font-mono: ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, monospace;
@@ -164,24 +162,17 @@ ol {
     --leading-lead: 1.5;
     --leading-body: 1.6;
 
-    /* --- Spacing (4px base) --- */
+    /* --- Spacing --- */
     --space-gutter: clamp(1rem, 0.7rem + 1.4vw, 2rem);
     --space-section-y: clamp(3rem, 2rem + 4vw, 6rem);
     --space-section-x: clamp(1rem, 0.7rem + 1.4vw, 2rem);
 
     /* --- Radius --- */
-    --radius-sm: 0.375rem; /* 6px  */
-    --radius-md: 0.625rem; /* 10px */
-    --radius-lg: 1rem; /* 16px */
-    --radius-xl: 1.5rem; /* 24px */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.625rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
     --radius-pill: 9999px;
-
-    /* --- Elevation: warm shadows (a touch of accent + low alpha) --- */
-    --shadow-1: 0 1px 2px rgba(28, 27, 33, 0.05), 0 1px 1px rgba(28, 27, 33, 0.04);
-    --shadow-2: 0 4px 14px -4px rgba(28, 27, 33, 0.08), 0 2px 4px -2px rgba(28, 27, 33, 0.05);
-    --shadow-3: 0 12px 28px -8px rgba(28, 27, 33, 0.12), 0 4px 10px -4px rgba(28, 27, 33, 0.06);
-    --shadow-4: 0 24px 48px -12px rgba(28, 27, 33, 0.16), 0 8px 18px -6px rgba(28, 27, 33, 0.08);
-    --shadow-focus: 0 0 0 3px var(--color-accent-soft), 0 0 0 4px var(--color-accent);
 
     /* --- Motion --- */
     --motion-fast: 120ms;
@@ -191,137 +182,101 @@ ol {
     --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
     --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
 
-    /* --- Light-theme palette --- */
-    /* Backgrounds: warm bone, white cards, slight blush sunken */
-    --color-surface-page: #fbf8f4; /* warm off-white */
-    --color-surface-raised: #ffffff;
-    --color-surface-sunken: #f4eee6;
-    --color-surface-inverse: #161922; /* deep ink-blue */
+    /* --- Colors (ef-themes Melissa, light / dark) ---
+     * Each token is `light-dark(<light-hex>, <dark-hex>)`. The
+     * function reads :root's `color-scheme` and returns the matching
+     * branch, so OS preference is honoured before JS runs and the
+     * explicit `[data-theme=*]` hooks below take over once it does.
+     */
 
-    /* Ink: deep navy, calm secondary, soft muted */
-    --color-ink-primary: #161922;
-    --color-ink-secondary: #3b4252;
-    --color-ink-muted: #6b7184;
-    --color-ink-inverse: #fbf8f4;
-    --color-ink-accent: #8a3a14; /* darker accent for inline link copy */
+    /* Surfaces -- warm bone (light) / deep brown (dark). */
+    --color-surface-page: light-dark(#fff6d8, #352718);
+    --color-surface-raised: light-dark(#fffbeb, #483426);
+    --color-surface-sunken: light-dark(#f5e9cb, #251a0f);
+    --color-surface-inverse: light-dark(#352718, #fff6d8);
 
-    /* Borders: warm hairlines */
-    --color-border-subtle: #ebe2d4;
-    --color-border-strong: #c9bfae;
-    --color-border-accent: #d6651f;
+    /* Ink ramps. `secondary` and `muted` are tuned so even small body
+     * text clears WCAG AA 4.5:1 against `surface-page` in both modes. */
+    --color-ink-primary: light-dark(#484431, #e8e4b1);
+    --color-ink-secondary: light-dark(#5a5644, #c5c1a0);
+    --color-ink-muted: light-dark(#6f6a52, #a8a585);
+    --color-ink-inverse: light-dark(#fff6d8, #352718);
+    /* Inline link copy. Warm rust on cream, vivid amber on brown. */
+    --color-ink-accent: light-dark(#80431a, #ffa21f);
 
-    /* Accent (warm sunset amber + soft halo) */
-    --color-accent: #d6651f; /* CTAs, focus rings */
-    --color-accent-soft: rgba(214, 101, 31, 0.15);
-    --color-accent-strong: #b85217;
-    --color-accent-ink: #ffffff; /* text on accent surfaces */
+    /* Borders. */
+    --color-border-subtle: light-dark(#e7d7c6, #59463f);
+    --color-border-strong: light-dark(#c5baa6, #6f5f58);
+    --color-border-accent: light-dark(#ba5205, #ffa21f);
 
-    /* Trust (deep blue-grey for "stability" signals) */
-    --color-trust: #2d4a63;
-    --color-trust-soft: rgba(45, 74, 99, 0.1);
+    /* Accent (CTAs, focus halo). Melissa's signature warm amber. */
+    --color-accent: light-dark(#ba5205, #ffa21f);
+    --color-accent-soft: light-dark(rgba(186, 82, 5, 0.15), rgba(255, 162, 31, 0.18));
+    --color-accent-strong: light-dark(#a14400, #ffbf52);
+    /* Text on accent surfaces. White over light amber, brown over
+     * the brighter dark-mode amber so labels stay legible. */
+    --color-accent-ink: light-dark(#ffffff, #352718);
 
-    /* Per-project tag colours -- the old Patina green moves here */
-    --color-project-patina: #5CBD89;
-    --color-project-ec: #F29361;
-    --color-project-services: #AA97FF;
-    /* Darker variants used for tag *text* so the label still hits AA
-       contrast against the soft tag background. */
-    --color-project-patina-ink: #123221;
-    --color-project-ec-ink: #592819;
-    --color-project-services-ink: #312859;
+    /* Trust (deep blue / sky blue). Reserved for "stability" cues. */
+    --color-trust: light-dark(#2f3f83, #98bfff);
+    --color-trust-soft: light-dark(rgba(47, 63, 131, 0.1), rgba(152, 191, 255, 0.15));
 
-    /* Semantic */
-    --color-success: #3f8f60;
-    --color-warning: #c98a2a;
-    --color-danger: #b8443a;
-    --color-info: #3a6fb8;
+    /* Per-project tag families. The base hue is used at ~15% alpha as
+     * the chip background; the matching `-ink` is the label colour
+     * that lands AA on the soft tint over `surface-page`. */
+    --color-project-patina: light-dark(#cbf09f, #6fd560);
+    --color-project-patina-ink: light-dark(#007a0a, #3f521a);
+
+    --color-project-ec: light-dark(#f4ed7e, #604b13);
+    --color-project-ec-ink: light-dark(#a26310, #e4b53f);
+
+    --color-project-services: light-dark(#aa3e74, #f0aac5);
+    --color-project-services-ink: light-dark(#fad6ef, #613a50);
+
+    /* Semantic. */
+    --color-success: light-dark(#007a0a, #6fd560);
+    --color-warning: light-dark(#a26310, #e4b53f);
+    --color-danger: light-dark(#ba2d2f, #ff7f7f);
+    --color-info: light-dark(#375cc6, #57aff6);
+
+    /* --- Shadows ---
+     * `light-dark()` is a <color>; it cannot wrap a whole shadow
+     * value, but it can wrap each colour inside one. Light shadows
+     * use the brand ink (warm), dark shadows use pure black for
+     * depth on the brown page. */
+    --shadow-1:
+        0 1px 2px light-dark(rgba(72, 68, 49, 0.06), rgba(0, 0, 0, 0.3)),
+        0 1px 1px light-dark(rgba(72, 68, 49, 0.04), rgba(0, 0, 0, 0.2));
+    --shadow-2:
+        0 4px 14px -4px light-dark(rgba(72, 68, 49, 0.1), rgba(0, 0, 0, 0.45)),
+        0 2px 4px -2px light-dark(rgba(72, 68, 49, 0.06), rgba(0, 0, 0, 0.3));
+    --shadow-3:
+        0 12px 28px -8px light-dark(rgba(72, 68, 49, 0.14), rgba(0, 0, 0, 0.55)),
+        0 4px 10px -4px light-dark(rgba(72, 68, 49, 0.08), rgba(0, 0, 0, 0.35));
+    --shadow-4:
+        0 24px 48px -12px light-dark(rgba(72, 68, 49, 0.18), rgba(0, 0, 0, 0.65)),
+        0 8px 18px -6px light-dark(rgba(72, 68, 49, 0.1), rgba(0, 0, 0, 0.4));
+    --shadow-focus:
+        0 0 0 3px var(--color-accent-soft),
+        0 0 0 4px var(--color-accent);
 }
 
-/* ---------------- 4. Dark theme ---------------- */
+/* ---------------- 4. Theme attribute hooks ---------------- */
+/* Pinning `color-scheme` here is what makes `light-dark()` switch
+ * branches when the user has made an explicit choice via the toggle. */
+[data-theme="light"] {
+    color-scheme: light;
+}
 [data-theme="dark"] {
-    --color-surface-page: #11141c;
-    --color-surface-raised: #2a2f40;
-    --color-surface-sunken: #0a0c12;
-    --color-surface-inverse: #fbf8f4;
-
-    --color-ink-primary: #f5f1e8;
-    --color-ink-secondary: #c5c6cf;
-    --color-ink-muted: #8a8e9b;
-    --color-ink-inverse: #161922;
-    --color-ink-accent: #f3a55a;
-
-    --color-border-subtle: #262a36;
-    --color-border-strong: #393f50;
-    --color-border-accent: #f3a55a;
-
-    --color-accent: #f3a55a; /* slightly lifted on dark */
-    --color-accent-soft: rgba(243, 165, 90, 0.18);
-    --color-accent-strong: #ffbf7c;
-    --color-accent-ink: #161922;
-
-    --color-trust: #8eb5d1;
-    --color-trust-soft: rgba(142, 181, 209, 0.15);
-
-    --color-project-patina: #123221;
-    --color-project-ec: #592819;
-    --color-project-services: #312859;
-    /* Brighter variants used for tag *text* so the label still hits AA
-       contrast against the soft tag background. */
-    --color-project-patina-ink: #4cbd89;
-    --color-project-ec-ink: #F29361;
-    --color-project-services-ink: #AA97FF;
-
-    --color-success: #5fb988;
-    --color-warning: #e8b463;
-    --color-danger: #e07a72;
-    --color-info: #6fa4e8;
-
-    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.2);
-    --shadow-2: 0 4px 14px -4px rgba(0, 0, 0, 0.45), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-    --shadow-3: 0 12px 28px -8px rgba(0, 0, 0, 0.55), 0 4px 10px -4px rgba(0, 0, 0, 0.35);
-    --shadow-4: 0 24px 48px -12px rgba(0, 0, 0, 0.65), 0 8px 18px -6px rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
 }
 
-/* Use the system preference if no explicit choice has been made
- * (the JS sets data-theme on <html> on first paint; this is a
- * no-flash fallback for the very first render before JS runs). */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme]) {
-        --color-surface-page: #11141c;
-        --color-surface-raised: #1a1e29;
-        --color-surface-sunken: #0a0c12;
-        --color-surface-inverse: #fbf8f4;
-
-        --color-ink-primary: #f5f1e8;
-        --color-ink-secondary: #c5c6cf;
-        --color-ink-muted: #8a8e9b;
-        --color-ink-inverse: #161922;
-        --color-ink-accent: #f3a55a;
-
-        --color-border-subtle: #262a36;
-        --color-border-strong: #393f50;
-        --color-border-accent: #f3a55a;
-
-        --color-accent: #f3a55a;
-        --color-accent-soft: rgba(243, 165, 90, 0.18);
-        --color-accent-strong: #ffbf7c;
-        --color-accent-ink: #161922;
-
-        --color-trust: #8eb5d1;
-        --color-trust-soft: rgba(142, 181, 209, 0.15);
-
-        --color-project-patina: #71c399;
-        --color-project-ec: #e6996e;
-        --color-project-services: #a899e0;
-        --color-project-patina-ink: #71c399;
-        --color-project-ec-ink: #e6996e;
-        --color-project-services-ink: #a899e0;
-
-        --color-success: #5fb988;
-        --color-warning: #e8b463;
-        --color-danger: #e07a72;
-        --color-info: #6fa4e8;
-    }
+/* The two-image Logo component renders both SVGs and lets CSS hide
+ * the wrong one. `display` isn't a colour, so we still need the
+ * attribute selectors here. */
+[data-theme="light"] .logo-dark,
+[data-theme="dark"] .logo-light {
+    display: none;
 }
 
 /* ---------------- 5. Reduced motion ---------------- */
