@@ -28,7 +28,10 @@ pub fn ProjectCard(project: &'static ProjectCopy, tone: TagTone) -> impl IntoVie
             <Surface
                 tone=SurfaceTone::Raised
                 elevation=SurfaceElevation::E1
-                class="h-full flex flex-col gap-5 group-hover:(shadow-elev-3 -translate-y-0.5) transition-all duration-300"
+                class=uno!(
+                    "h-full flex flex-col gap-5",
+                    "group-hover:(shadow-elev-3 -translate-y-0.5) transition-all duration-300"
+                )
             >
                 <div class=format!(
                     "{} {monogram_class}",
@@ -132,35 +135,46 @@ pub fn DocCard(
     #[prop(into)] description: String,
     #[prop(optional, default = false)] external: bool,
 ) -> impl IntoView {
-    view! {
-        <a
-            href=href
-            target=if external { Some("_blank") } else { None }
-            rel=if external { Some("noopener noreferrer") } else { None }
-            class="group block"
+    let inner = view! {
+        <Surface
+            tone=SurfaceTone::Outline
+            elevation=SurfaceElevation::Flat
+            class=uno!(
+                "h-full flex flex-col gap-3",
+                "group-hover:(border-border-accent bg-surface-raised) transition-colors duration-200"
+            )
         >
-            <Surface
-                tone=SurfaceTone::Outline
-                elevation=SurfaceElevation::Flat
-                class="h-full flex flex-col gap-3 group-hover:(border-border-accent bg-surface-raised) transition-colors duration-200"
-            >
-                <div class=uno!("flex items-start justify-between gap-3")>
-                    <Heading level=HeadingLevel::H3 class="!text-h3">
-                        {title}
-                    </Heading>
-                    <span
-                        class=uno![
-                            "i-lucide-arrow-up-right w-5 h-5 text-ink-muted flex-shrink-0",
-                        "group-hover:(text-accent translate-x-0.5 translate-y--0.5) transition-transform duration-200"
-                        ]
-                        aria-hidden="true"
-                    ></span>
-                </div>
-                <Body tone=BodyTone::Secondary class="!text-small">
-                    {description}
-                </Body>
-            </Surface>
-        </a>
+            <div class=uno!("flex items-start justify-between gap-3")>
+                <Heading level=HeadingLevel::H3 class="!text-h3">
+                    {title}
+                </Heading>
+                <span
+                    class=uno![
+                        "i-lucide-arrow-up-right w-5 h-5 text-ink-muted flex-shrink-0",
+                        "group-hover:(text-accent translate-x-0.5 -translate-y-0.5) transition-transform duration-200"
+                    ]
+                    aria-hidden="true"
+                ></span>
+            </div>
+            <Body tone=BodyTone::Secondary class="!text-small">
+                {description}
+            </Body>
+        </Surface>
+    };
+    if external {
+        view! {
+            <a href=href target="_blank" rel="noopener noreferrer" class="group block">
+                {inner}
+            </a>
+        }
+        .into_any()
+    } else {
+        view! {
+            <A href=href attr:class="group block">
+                {inner}
+            </A>
+        }
+        .into_any()
     }
 }
 
@@ -257,7 +271,10 @@ pub fn AnnouncementCard(announcement: &'static crate::data::announcements::Annou
             <Surface
                 tone=SurfaceTone::Raised
                 elevation=SurfaceElevation::E1
-                class="h-full flex flex-col gap-4 group-hover:(shadow-elev-3 -translate-y-0.5) transition-all duration-300"
+                class=uno!(
+                    "h-full flex flex-col gap-4",
+                    "group-hover:(shadow-elev-3 -translate-y-0.5) transition-all duration-300"
+                )
             >
                 <div class=uno!(
                     "flex flex-wrap items-baseline gap-x-3 gap-y-1 text-caption font-mono uppercase tracking-wider"

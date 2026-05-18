@@ -17,7 +17,7 @@ use unocss_classes::uno;
 #[component]
 pub fn Container(
     /// Max-width preset. `Wide` caps at 1280px (default), `Narrow`
-    /// caps at 768px for prose-heavy blocks (announcement detail,
+    /// caps at 760px for prose-heavy blocks (announcement detail,
     /// long form copy).
     #[prop(optional)]
     width: ContainerWidth,

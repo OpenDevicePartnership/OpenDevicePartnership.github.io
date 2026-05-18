@@ -28,6 +28,15 @@ import { defineConfig, presetIcons, presetWind3, transformerVariantGroup, transf
 export default defineConfig({
     content: {
         filesystem: ["src/**/*.rs", "index.html"],
+        // The CLI's default pipeline include regex covers JS/TS/Vue/HTML/etc.
+        // but not `.rs`, so source-level transformers (notably
+        // `transformerVariantGroup`) silently skip Rust files and grouped
+        // utilities like `group-hover:(shadow-elev-3 -translate-y-0.5)`
+        // never get rewritten to their flat form. Extend the include so
+        // transformers run on the same files we scan.
+        pipeline: {
+            include: [/\.(rs|html)($|\?)/],
+        },
     },
     presets: [
         presetWind3({

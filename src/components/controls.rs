@@ -149,7 +149,7 @@ pub fn ArrowLink(
         <span
             class=uno![
                 "i-lucide-arrow-up-right w-4 h-4 text-ink-muted",
-                "group-hover:(text-accent translate-x-0.5 translate-y--0.5)",
+                "group-hover:(text-accent translate-x-0.5 -translate-y-0.5)",
                 "transition-transform duration-200"
             ]
             aria-hidden="true"

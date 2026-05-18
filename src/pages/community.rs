@@ -1,4 +1,4 @@
-//! Community page (`/`) -- merges governance, contributing, docs &
+//! Community page (`/community`) -- merges governance, contributing, docs &
 //! training, and team directory into one editorial page with
 //! anchored sections.
 
@@ -138,7 +138,10 @@ fn WorkingGroupCard(title: &'static str, description: &'static str, href: &'stat
             <Surface
                 tone=SurfaceTone::Raised
                 elevation=SurfaceElevation::E1
-                class="h-full flex flex-col gap-3 group-hover:(shadow-elev-3 -translate-y-0.5) transition-all duration-300"
+                class=uno!(
+                    "h-full flex flex-col gap-3",
+                    "group-hover:(shadow-elev-3 -translate-y-0.5) transition-all duration-300"
+                )
             >
                 <Heading level=HeadingLevel::H3>{title}</Heading>
                 <Body tone=BodyTone::Secondary>{description}</Body>
