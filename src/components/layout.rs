@@ -27,7 +27,6 @@ pub fn Container(
     let cap = match width {
         ContainerWidth::Wide => uno!("max-w-[1280px]"),
         ContainerWidth::Narrow => uno!("max-w-[760px]"),
-        ContainerWidth::Page => uno!("max-w-[1536px]"),
     };
     let final_class = format!("{cap} mx-auto w-full px-section-x {class}");
     view! { <div class=final_class>{children()}</div> }
@@ -38,7 +37,6 @@ pub enum ContainerWidth {
     #[default]
     Wide,
     Narrow,
-    Page,
 }
 
 /// Vertical-rhythm section. Renders a `<section>` with the fluid
@@ -54,7 +52,6 @@ pub fn Section(
 ) -> impl IntoView {
     let surface_class = match surface {
         SectionSurface::Page => uno!("bg-surface-page text-ink-primary"),
-        SectionSurface::Raised => uno!("bg-surface-raised text-ink-primary"),
         SectionSurface::Sunken => uno!("bg-surface-sunken text-ink-primary"),
         SectionSurface::Inverse => uno!("bg-surface-inverse text-ink-inverse"),
     };
@@ -70,7 +67,6 @@ pub fn Section(
 pub enum SectionSurface {
     #[default]
     Page,
-    Raised,
     Sunken,
     Inverse,
 }
@@ -138,7 +134,6 @@ pub fn Grid(
     let style = match min {
         GridMin::Sm => "grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));",
         GridMin::Md => "grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));",
-        GridMin::Lg => "grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));",
     };
     let gap_class = match gap {
         StackGap::Xs => uno!("gap-3"),
@@ -160,7 +155,6 @@ pub enum GridMin {
     Sm,
     #[default]
     Md,
-    Lg,
 }
 
 /// A tactile card-shaped surface with elevation, border, and radius.
@@ -173,15 +167,11 @@ pub fn Surface(
 ) -> impl IntoView {
     let tone_class = match tone {
         SurfaceTone::Raised => uno!("bg-surface-raised border border-border-subtle"),
-        SurfaceTone::Sunken => uno!("bg-surface-sunken border border-border-subtle"),
-        SurfaceTone::Inverse => uno!("bg-surface-inverse text-ink-inverse"),
         SurfaceTone::Outline => uno!("bg-transparent border border-border-strong"),
     };
     let elev_class = match elevation {
         SurfaceElevation::Flat => "",
         SurfaceElevation::E1 => "shadow-elev-1",
-        SurfaceElevation::E2 => "shadow-elev-2",
-        SurfaceElevation::E3 => "shadow-elev-3",
     };
     let final_class = format!("rounded-lg p-6 md:p-8 {tone_class} {elev_class} {class}");
     view! { <div class=final_class>{children()}</div> }
@@ -191,8 +181,6 @@ pub fn Surface(
 pub enum SurfaceTone {
     #[default]
     Raised,
-    Sunken,
-    Inverse,
     Outline,
 }
 
@@ -201,6 +189,4 @@ pub enum SurfaceElevation {
     Flat,
     #[default]
     E1,
-    E2,
-    E3,
 }

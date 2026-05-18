@@ -93,7 +93,6 @@ pub fn Body(
     let tone_class = match tone {
         BodyTone::Primary => uno!("text-ink-primary"),
         BodyTone::Secondary => uno!("text-ink-secondary"),
-        BodyTone::Muted => uno!("text-ink-muted"),
     };
     let final_class = format!("text-body font-normal {tone_class} {class}");
     view! { <p class=final_class>{children()}</p> }
@@ -104,7 +103,6 @@ pub enum BodyTone {
     #[default]
     Primary,
     Secondary,
-    Muted,
 }
 
 /// Uppercase monospace eyebrow label. Used as section tags and as

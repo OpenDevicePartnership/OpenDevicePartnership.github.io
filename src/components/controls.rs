@@ -9,16 +9,12 @@ use unocss_classes::uno;
 pub enum ButtonVariant {
     #[default]
     Primary,
-    Secondary,
-    Ghost,
 }
 
 #[derive(Clone, Copy, Default, PartialEq, Eq)]
 pub enum ButtonSize {
     #[default]
     Md,
-    Sm,
-    Lg,
 }
 
 fn button_classes(variant: ButtonVariant, size: ButtonSize) -> String {
@@ -30,23 +26,9 @@ fn button_classes(variant: ButtonVariant, size: ButtonSize) -> String {
                 "shadow-elev-1"
             )
         }
-        ButtonVariant::Secondary => {
-            uno!(
-                "bg-surface-raised text-ink-primary border border-border-strong",
-                "hover:(bg-surface-sunken)"
-            )
-        }
-        ButtonVariant::Ghost => {
-            uno!(
-                "bg-transparent text-ink-primary border border-transparent",
-                "hover:(bg-surface-sunken)"
-            )
-        }
     };
     let size_class = match size {
-        ButtonSize::Sm => uno!("px-4 py-2 text-small"),
         ButtonSize::Md => uno!("px-5 py-3 text-body"),
-        ButtonSize::Lg => uno!("px-7 py-4 text-lead"),
     };
     format!(
         "{} {} {} {}",

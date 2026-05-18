@@ -135,11 +135,3 @@ pub fn ThemeToggle() -> impl IntoView {
         </button>
     }
 }
-
-/// Direct DOM helper used by `App` to apply the *initial* theme as
-/// early as possible -- before Leptos hydration -- to avoid a
-/// "theme flash" on first paint. Safe to call from any context.
-pub fn paint_initial_theme() {
-    let theme = read_initial_theme();
-    apply_theme(theme);
-}
