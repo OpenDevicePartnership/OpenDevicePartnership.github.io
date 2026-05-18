@@ -16,7 +16,7 @@ pub mod components;
 mod data;
 mod pages;
 
-use crate::pages::announcements::AnnouncementsPage;
+use crate::pages::announcements::{AnnouncementDetailPage, AnnouncementsPage};
 use crate::pages::boot_firmware::BootFirmware;
 use crate::pages::community::Community;
 use crate::pages::embedded_controller::EmbeddedController;
@@ -54,6 +54,7 @@ pub fn App() -> impl IntoView {
                             <Route path=path!("/getting-started") view=GettingStarted />
                             <Route path=path!("/community") view=Community />
                             <Route path=path!("/announcements") view=AnnouncementsPage />
+                            <Route path=path!("/announcements/:slug") view=AnnouncementDetailPage />
                             <Route path=path!("/boot-firmware") view=BootFirmware />
                             <Route path=path!("/embedded-controller") view=EmbeddedController />
                             <Route path=path!("/windows-ec-services") view=WindowsEcServices />

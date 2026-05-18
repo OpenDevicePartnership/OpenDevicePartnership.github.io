@@ -1,40 +1,45 @@
-//! Announcements page (`/announcements`).
+//! Announcements pages.
 //!
-//! Sidebar list + detail panel. Detail content is co-located here
-//! (one match arm per slug) so adding an announcement is a single
-//! struct literal in `data::announcements` plus a match arm.
+//! - [`AnnouncementsPage`] (`/announcements`): blog-style index of
+//!   announcement cards in reverse-chronological order.
+//! - [`AnnouncementDetailPage`] (`/announcements/<slug>`): the
+//!   permalink view for a single announcement. The prose body is
+//!   co-located here as a per-slug match arm so adding a new
+//!   announcement is one struct literal in `data::announcements`
+//!   plus one match arm here.
+//!
+//! Legacy `/announcements?id=<slug>` query-string permalinks are
+//! transparently redirected to `/announcements/<slug>` on mount.
 
-use crate::components::cards::AnnouncementDetail;
-use crate::components::controls::InlineLink;
-use crate::components::layout::{Container, Section, Stack, StackGap, Surface, SurfaceElevation, SurfaceTone};
-use crate::components::typography::{Display, DisplaySize, Eyebrow};
-use crate::data::announcements::{index_of, ANNOUNCEMENTS};
+use crate::components::cards::{AnnouncementCard, AnnouncementDetail};
+use crate::components::controls::{ArrowLink, InlineLink};
+use crate::components::layout::{Container, ContainerWidth, Section, Stack, StackGap};
+use crate::components::typography::{Body, BodyTone, Display, DisplaySize, Eyebrow};
+use crate::data::announcements::{find, ANNOUNCEMENTS};
 use leptos::prelude::*;
-use leptos_router::hooks::{use_location, use_navigate};
+use leptos_router::components::A;
+use leptos_router::hooks::{use_location, use_navigate, use_params_map};
 use unocss_classes::uno;
 
 #[component]
 pub fn AnnouncementsPage() -> impl IntoView {
+    // Redirect legacy `?id=<slug>` permalinks to the new path-based
+    // form. Cheap to keep — old links in chat history, bookmarks,
+    // etc. still land in the right place.
     let location = use_location();
     let navigate = use_navigate();
-
-    let (selected, set_selected) = signal(0_usize);
-
-    {
-        let location = location.clone();
-        Effect::new(move |_| {
-            let search = location.search.get();
-            if let Some(slug) = slug_from_query(&search) {
-                if let Some(idx) = index_of(slug) {
-                    set_selected.set(idx);
-                }
+    Effect::new(move |_| {
+        let search = location.search.get();
+        if let Some(slug) = slug_from_query(&search) {
+            if find(slug).is_some() {
+                navigate(&format!("/announcements/{slug}"), Default::default());
             }
-        });
-    }
+        }
+    });
 
     view! {
         <Section class="pt-16 md:pt-24">
-            <Container>
+            <Container width=ContainerWidth::Narrow>
                 <Stack gap=StackGap::Md>
                     <Eyebrow>"Announcements"</Eyebrow>
                     <Display size=DisplaySize::Lg>"News from the partnership."</Display>
@@ -43,85 +48,105 @@ pub fn AnnouncementsPage() -> impl IntoView {
         </Section>
 
         <Section>
-            <Container>
-                <div class=uno!("grid gap-8 md:gap-12 md:grid-cols-[280px_1fr] items-start")>
-                    <nav aria-label="Announcements" class=uno!("flex flex-col gap-2")>
-                        {ANNOUNCEMENTS
-                            .iter()
-                            .enumerate()
-                            .map(|(i, a)| {
-                                let navigate = navigate.clone();
-                                let slug = a.slug;
-                                let label = a.link_label;
-                                let active = move || selected.get() == i;
-                                view! {
-                                    <button
-                                        type="button"
-                                        class=move || {
-                                            let base = uno!(
-                                                "w-full text-left px-4 py-3 rounded-md text-small font-medium transition-colors duration-200"
-                                            );
-                                            if active() {
-                                                format!("{base} bg-accent-soft text-ink-accent")
-                                            } else {
-                                                format!(
-                                                    "{base} text-ink-secondary hover:(text-ink-primary bg-surface-sunken)",
-                                                )
-                                            }
-                                        }
-                                        on:click={
-                                            let navigate = navigate.clone();
-                                            move |_| {
-                                                set_selected.set(i);
-                                                navigate(
-                                                    &format!("/announcements?id={slug}"),
-                                                    Default::default(),
-                                                );
-                                            }
-                                        }
-                                    >
-                                        {label}
-                                    </button>
-                                }
-                            })
-                            .collect_view()}
-                    </nav>
+            <Container width=ContainerWidth::Narrow>
+                {if ANNOUNCEMENTS.is_empty() {
+                    view! {
+                        <Body tone=BodyTone::Secondary>
+                            "No announcements yet — check back soon."
+                        </Body>
+                    }
+                        .into_any()
+                } else {
+                    view! {
+                        <Stack gap=StackGap::Lg>
+                            {ANNOUNCEMENTS
+                                .iter()
+                                .map(|a| view! { <AnnouncementCard announcement=a /> })
+                                .collect_view()}
+                        </Stack>
+                    }
+                        .into_any()
+                }}
+            </Container>
+        </Section>
+    }
+}
 
-                    <Surface
-                        tone=SurfaceTone::Raised
-                        elevation=SurfaceElevation::E1
-                        class="!p-8 md:!p-12"
-                    >
-                        {move || {
-                            let idx = selected.get();
-                            if let Some(a) = ANNOUNCEMENTS.get(idx) {
-                                view! {
-                                    <AnnouncementDetail
-                                        eyebrow="Press release".to_string()
-                                        title=a.title.to_string()
+/// Permalink view for a single announcement.
+#[component]
+pub fn AnnouncementDetailPage() -> impl IntoView {
+    let params = use_params_map();
+    let slug = move || params.read().get("slug").unwrap_or_default();
+
+    view! {
+        <Section class="pt-16 md:pt-24">
+            <Container width=ContainerWidth::Narrow>
+                {move || {
+                    let slug = slug();
+                    match find(&slug) {
+                        Some(a) => {
+                            view! {
+                                <Stack gap=StackGap::Lg>
+                                    <A
+                                        href="/announcements"
+                                        attr:class=uno![
+                                            "group inline-flex items-center gap-2 text-small font-medium",
+                                            "text-ink-muted hover:text-ink-accent transition-colors duration-200"
+                                        ]
                                     >
+                                        <span
+                                            class=uno![
+                                                "i-lucide-arrow-right w-4 h-4 rotate-180",
+                                                "group-hover:-translate-x-0.5 transition-transform duration-200"
+                                            ]
+                                            aria-hidden="true"
+                                        ></span>
+                                        "All announcements"
+                                    </A>
+                                    <AnnouncementDetail announcement=a>
                                         {render_content(a.slug)}
                                     </AnnouncementDetail>
-                                }
-                                    .into_any()
-                            } else {
-                                view! { <p>"Select an announcement."</p> }.into_any()
+                                </Stack>
                             }
-                        }}
-                    </Surface>
-                </div>
+                                .into_any()
+                        }
+                        None => {
+                            view! {
+                                <Stack gap=StackGap::Md>
+                                    <Eyebrow>"Not found"</Eyebrow>
+                                    <Display size=DisplaySize::Md>
+                                        "That announcement isn't here."
+                                    </Display>
+                                    <Body tone=BodyTone::Secondary>
+                                        "The link may be out of date — head back to the index for the latest news."
+                                    </Body>
+                                    <ArrowLink href="/announcements"
+                                        .to_string()>"View all announcements"</ArrowLink>
+                                </Stack>
+                            }
+                                .into_any()
+                        }
+                    }
+                }}
             </Container>
         </Section>
     }
 }
 
 fn slug_from_query(search: &str) -> Option<&str> {
-    let id_start = search.find("id=")?;
-    let rest = &search[id_start + 3..];
-    Some(match rest.find('&') {
+    // Strip an optional leading '?'.
+    let s = search.strip_prefix('?').unwrap_or(search);
+    let id_start = s.find("id=")?;
+    let rest = &s[id_start + 3..];
+    let slug = match rest.find('&') {
         Some(end) => &rest[..end],
         None => rest,
-    })
+    };
+    if slug.is_empty() {
+        None
+    } else {
+        Some(slug)
+    }
 }
 
 fn render_content(slug: &str) -> AnyView {

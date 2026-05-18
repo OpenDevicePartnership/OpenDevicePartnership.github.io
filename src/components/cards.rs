@@ -205,18 +205,31 @@ pub fn TrustStrip() -> impl IntoView {
     }
 }
 
-/// Announcement detail card. Used on `/announcements`.
+/// Announcement detail card. Used on `/announcements/<slug>`.
 #[component]
 pub fn AnnouncementDetail(
-    #[prop(into)] eyebrow: String,
-    #[prop(into)] title: String,
+    announcement: &'static crate::data::announcements::Announcement,
     children: Children,
 ) -> impl IntoView {
+    let date_long = announcement.published_at.long();
+    let date_iso = announcement.published_at.iso();
+    let kind_label = announcement.kind.label();
+    let location = announcement.location;
     view! {
         <article>
             <Stack gap=StackGap::Md>
-                <Eyebrow>{eyebrow}</Eyebrow>
-                <Heading level=HeadingLevel::H1>{title}</Heading>
+                <Eyebrow>{kind_label}</Eyebrow>
+                <Heading level=HeadingLevel::H1>{announcement.title}</Heading>
+                <p class=uno!("text-small text-ink-muted font-mono")>
+                    <time datetime=date_iso>{date_long}</time>
+                    {location
+                        .map(|loc| {
+                            view! {
+                                " · "
+                                {loc}
+                            }
+                        })}
+                </p>
                 <div class=uno![
                     "max-w-[68ch] text-body text-ink-primary",
                     "leading-relaxed [&>p]:mb-5 [&_a]:underline [&_a]:underline-offset-4 [&_a]:text-ink-accent",
@@ -224,5 +237,56 @@ pub fn AnnouncementDetail(
                 ]>{children()}</div>
             </Stack>
         </article>
+    }
+}
+
+/// A blog-list card for the announcements index.
+///
+/// Renders the eyebrow (kind + date + optional location), the title,
+/// an excerpt, and a "Read more →" affordance. The entire card is a
+/// single anchor to the permalink so the click target is generous.
+#[component]
+pub fn AnnouncementCard(announcement: &'static crate::data::announcements::Announcement) -> impl IntoView {
+    let href = format!("/announcements/{}", announcement.slug);
+    let date_long = announcement.published_at.long();
+    let date_iso = announcement.published_at.iso();
+    let kind_label = announcement.kind.label();
+    let location = announcement.location;
+    view! {
+        <A href=href attr:class="group block">
+            <Surface
+                tone=SurfaceTone::Raised
+                elevation=SurfaceElevation::E1
+                class="h-full flex flex-col gap-4 group-hover:(shadow-elev-3 -translate-y-0.5) transition-all duration-300"
+            >
+                <div class=uno!(
+                    "flex flex-wrap items-baseline gap-x-3 gap-y-1 text-caption font-mono uppercase tracking-wider"
+                )>
+                    <span class=uno!("text-ink-accent")>{kind_label}</span>
+                    <span class=uno!("text-ink-muted")>"·"</span>
+                    <time class=uno!("text-ink-muted") datetime=date_iso>
+                        {date_long}
+                    </time>
+                    {location
+                        .map(|loc| {
+                            view! {
+                                <span class=uno!("text-ink-muted")>"·"</span>
+                                <span class=uno!("text-ink-muted")>{loc}</span>
+                            }
+                        })}
+                </div>
+                <Heading level=HeadingLevel::H2 class="!text-h3">
+                    {announcement.title}
+                </Heading>
+                <Body tone=BodyTone::Secondary>{announcement.excerpt}</Body>
+                <span class=uno![
+                    "mt-auto inline-flex items-center gap-2 text-small font-medium text-ink-accent",
+                    "group-hover:underline underline-offset-4"
+                ]>
+                    "Read more"
+                    <span class="i-lucide-arrow-right w-4 h-4" aria-hidden="true"></span>
+                </span>
+            </Surface>
+        </A>
     }
 }
