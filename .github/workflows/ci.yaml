@@ -212,3 +212,23 @@ jobs:
             echo "::error::One or more assets exceeded their size budget."
             exit 1
           fi
+
+      - name: Critical icon classes present
+        # UnoCSS preset-icons silently emits nothing when an icon class
+        # cannot be resolved (missing iconify pack, typo, etc.), which
+        # would ship a working build with invisible buttons. Assert that
+        # the icons we actually rely on made it into the generated CSS.
+        run: |
+          set -euo pipefail
+          css=$(ls dist/uno.generated-*.css | head -n1)
+          required="i-lucide-moon i-lucide-sun i-lucide-menu i-lucide-x i-lucide-arrow-right i-lucide-github"
+          missing=""
+          for cls in $required; do
+            grep -qF ".$cls" "$css" || missing="$missing $cls"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error::UnoCSS did not emit rules for:$missing"
+            echo "::error::Likely cause: missing iconify pack in node_modules (run 'npm ci'), or class typo in src/."
+            exit 1
+          fi
+          echo "OK: all required icon utilities present in $css"
