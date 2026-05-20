@@ -4,7 +4,15 @@
 //! what the existing `<TeamGrid>` component consumes. Contributors
 //! who want to add or remove members only need to edit this file.
 
-use crate::components::team_grid::TeamMember;
+#[derive(Clone, Debug)]
+pub struct TeamMember {
+    pub first_name: &'static str,
+    pub last_name: &'static str,
+    pub role: &'static str,
+    pub github_username: &'static str,
+    pub github_url: &'static str,
+    pub image_url: &'static str,
+}
 
 pub fn steering_committee() -> Vec<TeamMember> {
     vec![

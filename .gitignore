@@ -1,2 +1,8 @@
 /target
 /dist/
+
+# UnoCSS pipeline -- generated stylesheet and Node tooling are not
+# committed; consumers run `npm install` once and `trunk build` after.
+/node_modules/
+/style/uno.generated.css
+

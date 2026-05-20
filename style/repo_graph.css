@@ -1,13 +1,17 @@
 /* Styles for the D3 repository graph rendered by
- * src/components/repo_view.rs + public/repo_graph.js. Loaded once at
- * boot via index.html so the component does not have to inject a
- * <style> tag at runtime. */
+ * src/components/repo_view.rs + public/repo_graph.js. Loaded lazily
+ * (see repo_view.rs) so it does NOT have access to the unocss
+ * utility classes; theming has to come from raw `light-dark()` calls.
+ * We follow the same color-scheme convention base.css establishes, so
+ * the graph automatically tracks the rest of the page. */
 
 .repository-graph {
     position: relative;
     width: 100%;
     height: 100vh;
-    background: #f8f9fa;
+    /* Sunken surface (matches --color-surface-sunken in base.css). */
+    background: light-dark(#f5e9cb, #251a0f);
+    color: light-dark(#484431, #e8e4b1);
 }
 
 #zoom-controls {
@@ -22,10 +26,11 @@
 #zoom-controls button {
     width: 40px;
     height: 40px;
-    border: none;
-    background: white;
+    border: 1px solid light-dark(#c5baa6, #6f5f58);
+    background: light-dark(#fffbeb, #483426);
+    color: light-dark(#484431, #e8e4b1);
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 5px light-dark(rgba(72, 68, 49, 0.18), rgba(0, 0, 0, 0.45));
     cursor: pointer;
     font-size: 18px;
     display: flex;
@@ -34,7 +39,7 @@
 }
 
 #zoom-controls button:hover {
-    background: #f0f0f0;
+    background: light-dark(#f5e9cb, #59463f);
 }
 
 .repository-graph .node {
@@ -43,10 +48,12 @@
 
 .repository-graph .link {
     fill: none;
-    stroke: #666;
+    /* Muted ink so the lines recede behind the nodes. */
+    stroke: light-dark(#6f6a52, #a8a585);
     stroke-width: 2;
 }
 
 .repository-graph .column-headers text {
     font-family: Arial, sans-serif;
+    fill: light-dark(#484431, #e8e4b1);
 }

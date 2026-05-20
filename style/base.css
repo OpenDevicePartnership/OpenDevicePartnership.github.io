@@ -1,0 +1,328 @@
+/* Base layer for the ODP site.
+ *
+ * Sections:
+ *   1. Reset (small, opinionated; not a full normalize)
+ *   2. @font-face declarations (self-hosted Geist)
+ *   3. Design tokens on :root
+ *        - Non-color tokens (type, spacing, radius, motion).
+ *        - Color tokens, expressed once with `light-dark(<light>, <dark>)`
+ *          so the dark theme inherits without a parallel token block.
+ *   4. Theme attribute hooks (set color-scheme; logo visibility)
+ *   5. prefers-reduced-motion overrides
+ *   6. ::selection
+ *
+ * Palette: sampled from Protesilaos' ef-themes `melissa-light` and
+ * `melissa-dark`. Warm cream + amber on light; deep brown + cream +
+ * amber on dark. Contrast for body-size text on the page surface is
+ * >= 4.5:1 (most pairs are >= 6:1).
+ *
+ * Why `light-dark()` instead of `[data-theme="dark"]` overrides?
+ *   The function resolves against the element's used `color-scheme`,
+ *   so a single token line drives both themes. Setting
+ *   `color-scheme: light dark` on :root means we follow the OS until
+ *   JS pins `data-theme=...`, at which point the theme overrides
+ *   `color-scheme` and `light-dark()` picks the matching colour --
+ *   no parallel `@media (prefers-color-scheme: dark)` block needed.
+ */
+
+/* ---------------- 1. Reset ---------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    /* UnoCSS preset-wind composes `transform`, `box-shadow`, and `ring`
+       utilities from CSS custom properties (e.g. `transform:
+       translateX(var(--un-translate-x)) translateY(var(--un-translate-y))
+       ...`). When a single utility sets only one of these vars, the rest
+       must resolve to a value or the entire declaration becomes invalid
+       and silently does nothing. UnoCSS normally injects these defaults
+       via its preflight, but we disable that (`preflight: false` in
+       `unocss.config.ts`) because we ship our own reset above. Restore
+       just the var defaults so hover lifts/shadows actually render. */
+    --un-translate-x: 0;
+    --un-translate-y: 0;
+    --un-translate-z: 0;
+    --un-rotate: 0;
+    --un-rotate-x: 0;
+    --un-rotate-y: 0;
+    --un-rotate-z: 0;
+    --un-skew-x: 0;
+    --un-skew-y: 0;
+    --un-scale-x: 1;
+    --un-scale-y: 1;
+    --un-scale-z: 1;
+    --un-ring-inset: ;
+    --un-ring-offset-width: 0px;
+    --un-ring-offset-color: #fff;
+    --un-ring-width: 0px;
+    --un-ring-color: rgb(147 197 253 / 0.5);
+    --un-ring-offset-shadow: 0 0 transparent;
+    --un-ring-shadow: 0 0 transparent;
+    --un-shadow-inset: ;
+    --un-shadow: 0 0 transparent;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body);
+    line-height: var(--leading-body);
+    color: var(--color-ink-primary);
+    background: var(--color-surface-page);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+img,
+picture,
+svg,
+video,
+canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+    border-radius: var(--radius-sm);
+}
+
+/* ---------------- 2. Fonts ---------------- */
+@font-face {
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("/fonts/geist-latin.woff2") format("woff2");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+        U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: "Geist";
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url("/fonts/geist-latin-ext.woff2") format("woff2");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF,
+        U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* Display face is a system humanist serif via the font stack -- no
+ * extra @font-face needed. */
+
+/* ---------------- 3. Tokens ---------------- */
+:root {
+    /* Tells `light-dark()` which value to use (and gives the UA a
+     * sensible default form-control palette). [data-theme=*] below
+     * pins this when the user makes an explicit choice. */
+    color-scheme: light dark;
+
+    /* --- Type --- */
+    --font-sans: "Geist", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+    --font-mono: ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, monospace;
+
+    --font-size-display-xl: clamp(2.75rem, 1.6rem + 5.5vw, 5.5rem);
+    --font-size-display: clamp(2.25rem, 1.4rem + 4vw, 4rem);
+    --font-size-h1: clamp(1.875rem, 1.4rem + 2vw, 2.75rem);
+    --font-size-h2: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+    --font-size-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+    --font-size-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);
+    --font-size-body: 1rem;
+    --font-size-small: 0.9375rem;
+    --font-size-caption: 0.8125rem;
+
+    --leading-display: 1.05;
+    --leading-heading: 1.18;
+    --leading-lead: 1.5;
+    --leading-body: 1.6;
+
+    /* --- Spacing --- */
+    --space-gutter: clamp(1rem, 0.7rem + 1.4vw, 2rem);
+    --space-section-y: clamp(3rem, 2rem + 4vw, 6rem);
+    --space-section-x: clamp(1rem, 0.7rem + 1.4vw, 2rem);
+
+    /* --- Radius --- */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.625rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+    --radius-pill: 9999px;
+
+    /* --- Motion --- */
+    --motion-fast: 120ms;
+    --motion-base: 200ms;
+    --motion-slow: 360ms;
+    --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+    --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+    --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+
+    /* --- Colors (ef-themes Melissa, light / dark) ---
+     * Each token is `light-dark(<light-hex>, <dark-hex>)`. The
+     * function reads :root's `color-scheme` and returns the matching
+     * branch, so OS preference is honoured before JS runs and the
+     * explicit `[data-theme=*]` hooks below take over once it does.
+     */
+
+    /* Surfaces -- warm bone (light) / deep brown (dark). */
+    --color-surface-page: light-dark(#fff6d8, #352718);
+    --color-surface-raised: light-dark(#fffbeb, #483426);
+    --color-surface-sunken: light-dark(#f5e9cb, #251a0f);
+    --color-surface-inverse: light-dark(#352718, #fff6d8);
+
+    /* Ink ramps. `secondary` and `muted` are tuned so even small body
+     * text clears WCAG AA 4.5:1 against `surface-page` in both modes. */
+    --color-ink-primary: light-dark(#484431, #e8e4b1);
+    --color-ink-secondary: light-dark(#5a5644, #c5c1a0);
+    --color-ink-muted: light-dark(#6f6a52, #a8a585);
+    --color-ink-inverse: light-dark(#fff6d8, #352718);
+    /* Inline link copy. Warm rust on cream, vivid amber on brown. */
+    --color-ink-accent: light-dark(#80431a, #ffa21f);
+
+    /* Borders. */
+    --color-border-subtle: light-dark(#e7d7c6, #59463f);
+    --color-border-strong: light-dark(#c5baa6, #6f5f58);
+    --color-border-accent: light-dark(#ba5205, #ffa21f);
+
+    /* Accent (CTAs, focus halo). Melissa's signature warm amber. */
+    --color-accent: light-dark(#ba5205, #ffa21f);
+    --color-accent-soft: light-dark(rgba(186, 82, 5, 0.15), rgba(255, 162, 31, 0.18));
+    --color-accent-strong: light-dark(#a14400, #ffbf52);
+    /* Text on accent surfaces. White over light amber, brown over
+     * the brighter dark-mode amber so labels stay legible. */
+    --color-accent-ink: light-dark(#ffffff, #352718);
+
+    /* Trust (deep blue / sky blue). Reserved for "stability" cues. */
+    --color-trust: light-dark(#2f3f83, #98bfff);
+    --color-trust-soft: light-dark(rgba(47, 63, 131, 0.1), rgba(152, 191, 255, 0.15));
+
+    /* Per-project tag families. The base hue is used at ~15% alpha as
+     * the chip background; the matching `-ink` is the label colour
+     * that lands AA on the soft tint over `surface-page`. */
+    --color-project-patina: light-dark(#cbf09f, #6fd560);
+    --color-project-patina-ink: light-dark(#007a0a, #3f521a);
+
+    --color-project-ec: light-dark(#f4ed7e, #604b13);
+    --color-project-ec-ink: light-dark(#a26310, #e4b53f);
+
+    --color-project-services: light-dark(#375cc6, #57aff6);
+    --color-project-services-ink: light-dark(#cce4f2, #384862);
+
+    /* Semantic. */
+    --color-success: light-dark(#007a0a, #6fd560);
+    --color-warning: light-dark(#a26310, #e4b53f);
+    --color-danger: light-dark(#ba2d2f, #ff7f7f);
+    --color-info: light-dark(#375cc6, #57aff6);
+
+    /* --- Shadows ---
+     * `light-dark()` is a <color>; it cannot wrap a whole shadow
+     * value, but it can wrap each colour inside one. Light shadows
+     * use the brand ink (warm), dark shadows use pure black for
+     * depth on the brown page. */
+    --shadow-1:
+        0 1px 2px light-dark(rgba(72, 68, 49, 0.06), rgba(0, 0, 0, 0.3)),
+        0 1px 1px light-dark(rgba(72, 68, 49, 0.04), rgba(0, 0, 0, 0.2));
+    --shadow-2:
+        0 4px 14px -4px light-dark(rgba(72, 68, 49, 0.1), rgba(0, 0, 0, 0.45)),
+        0 2px 4px -2px light-dark(rgba(72, 68, 49, 0.06), rgba(0, 0, 0, 0.3));
+    --shadow-3:
+        0 12px 28px -8px light-dark(rgba(72, 68, 49, 0.14), rgba(0, 0, 0, 0.55)),
+        0 4px 10px -4px light-dark(rgba(72, 68, 49, 0.08), rgba(0, 0, 0, 0.35));
+    --shadow-4:
+        0 24px 48px -12px light-dark(rgba(72, 68, 49, 0.18), rgba(0, 0, 0, 0.65)),
+        0 8px 18px -6px light-dark(rgba(72, 68, 49, 0.1), rgba(0, 0, 0, 0.4));
+    --shadow-focus:
+        0 0 0 3px var(--color-accent-soft),
+        0 0 0 4px var(--color-accent);
+}
+
+/* ---------------- 4. Theme attribute hooks ---------------- */
+/* Pinning `color-scheme` here is what makes `light-dark()` switch
+ * branches when the user has made an explicit choice via the toggle. */
+[data-theme="light"] {
+    color-scheme: light;
+}
+[data-theme="dark"] {
+    color-scheme: dark;
+}
+
+/* The two-image Logo component renders both SVGs and lets CSS hide
+ * the wrong one. `display` isn't a colour, so we still need the
+ * attribute selectors here. */
+[data-theme="light"] .logo-dark,
+[data-theme="dark"] .logo-light {
+    display: none;
+}
+
+/* ---------------- 5. Reduced motion ---------------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ---------------- 6. Selection ---------------- */
+::selection {
+    background: var(--color-accent-soft);
+    color: var(--color-ink-primary);
+}

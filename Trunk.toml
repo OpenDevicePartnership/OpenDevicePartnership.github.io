@@ -31,8 +31,12 @@ minify = "always"
 [watch]
 # Paths to watch. The `build.target`'s parent folder is watched by default.
 watch = []
-# Paths to ignore.
-ignore = []
+# Paths to ignore. The UnoCSS pre-build hook writes
+# `style/uno.generated.css`; without this, Trunk would see that write
+# and immediately re-trigger another build, looping forever. Same for
+# `node_modules` (npm install churns it on its own schedule) and
+# `dist` (Trunk's own output).
+ignore = ["style/uno.generated.css", "node_modules", "dist"]
 
 [serve]
 # The address to serve on.
@@ -60,3 +64,18 @@ open = false
 # tls_cert_path = "self_signed_certs/cert.pem"
 # Additional headers to send. NOTE: header names must be valid HTTP headers.
 # headers = { "X-Foo" = "bar" }
+
+# UnoCSS pre-build hook.
+#
+# We use the `unocss-classes` Rust crate (`uno!` macro) to author
+# class strings inline in `view!` blocks, then ask `@unocss/cli` to
+# scan src/**/*.rs and emit `style/uno.generated.css`. Trunk runs the
+# hook before compiling Rust, so the generated CSS is in place by the
+# time the asset graph is built.
+#
+# The CLI is provided by `package.json`. Run `npm install` once after
+# pulling, then Trunk handles the rest.
+[[hooks]]
+stage = "pre_build"
+command = "npm"
+command_arguments = ["run", "--silent", "build:css"]
