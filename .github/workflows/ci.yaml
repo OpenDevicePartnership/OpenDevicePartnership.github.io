@@ -232,3 +232,87 @@ jobs:
             exit 1
           fi
           echo "OK: all required icon utilities present in $css"
+
+  lighthouse:
+    name: Lighthouse (mobile, soft)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Soft mode: this job MUST NOT block PR merges. It exists to
+    # surface regressions in performance / accessibility / SEO / best
+    # practices, not to gate them. Once scores stabilize we'll flip
+    # to strict assertions in a follow-up.
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install nightly Rust
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Cache cargo registry and target
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: lighthouse-build
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install npm dependencies (UnoCSS)
+        run: npm ci
+
+      - name: Install Trunk
+        run: |
+          wget -qO- https://github.com/trunk-rs/trunk/releases/download/v0.21.14/trunk-x86_64-unknown-linux-gnu.tar.gz \
+            | tar -xzf- -C /usr/local/bin
+
+      - name: Build with Trunk
+        run: trunk build --release
+
+      - name: Install Lighthouse CI
+        # ubuntu-latest ships Google Chrome; @lhci/cli discovers it
+        # automatically. Pin to the 0.14.x line for stability.
+        run: npm install --no-save @lhci/cli@0.14.x
+
+      - name: Run Lighthouse CI (soft)
+        # `|| true` belts `continue-on-error`'s suspenders: a transient
+        # lhci failure (Chrome crash, port collision) still leaves the
+        # job green so we always reach the summary + artifact steps.
+        run: npx lhci autorun --config=lighthouserc.json || true
+
+      - name: Summarize scores
+        # Extract median category scores from each Lighthouse report
+        # and post a compact table to the workflow run summary so
+        # reviewers don't have to download the artifact for the
+        # at-a-glance number.
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          files=(lhci-reports/lhr-*.json)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "::warning::No Lighthouse reports were produced."
+            exit 0
+          fi
+          {
+            echo "| URL | Perf | A11y | Best | SEO |"
+            echo "|---|---|---|---|---|"
+            for f in "${files[@]}"; do
+              node -e "
+                const r = require('./$f');
+                const c = r.categories;
+                const pct = k => Math.round(c[k].score * 100);
+                console.log(\`| \${r.finalUrl} | \${pct('performance')} | \${pct('accessibility')} | \${pct('best-practices')} | \${pct('seo')} |\`);
+              "
+            done
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: lhci-reports/
+          retention-days: 14
